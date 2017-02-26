@@ -9,7 +9,7 @@ class App extends React.Component{
         return(
             <div className="App-section">
                 <div className="App-header">
-                    <p>Hello bebe!</p>
+                    <p>Hello baby!</p>
                 </div>
                 <div className="App-section">
                     <TodoList />

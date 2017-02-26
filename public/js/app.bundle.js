@@ -9846,7 +9846,7 @@ var App = function (_React$Component) {
                     _react2.default.createElement(
                         'p',
                         null,
-                        'Hello bebe!'
+                        'Hello baby!'
                     )
                 ),
                 _react2.default.createElement(
