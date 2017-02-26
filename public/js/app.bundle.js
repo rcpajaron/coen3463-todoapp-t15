@@ -9914,7 +9914,7 @@ var Counter = function (_Component) {
       count: 0
     };
     _this.increment = _this.increment.bind(_this);
-    _this.increment = _this.decrement.bind(_this);
+    _this.decrement = _this.decrement.bind(_this);
     return _this;
   }
   // increment = () =>{

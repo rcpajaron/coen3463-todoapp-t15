@@ -7,7 +7,7 @@ class Counter extends Component {
       count: 0
     }
     this.increment = this.increment.bind(this)
-    this.increment = this.decrement.bind(this)
+    this.decrement = this.decrement.bind(this)
   }
   // increment = () =>{
   //   let num = this.state.count;
