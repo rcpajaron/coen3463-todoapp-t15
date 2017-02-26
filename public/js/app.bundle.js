@@ -9913,6 +9913,8 @@ var Counter = function (_Component) {
     _this.state = {
       count: 0
     };
+    _this.increment = _this.increment.bind(_this);
+    _this.increment = _this.decrement.bind(_this);
     return _this;
   }
   // increment = () =>{
@@ -9953,12 +9955,12 @@ var Counter = function (_Component) {
         ),
         _react2.default.createElement(
           "button",
-          { onClick: this.increment.bind(this) },
+          { onClick: this.increment },
           " Increment "
         ),
         _react2.default.createElement(
           "button",
-          { onClick: this.decrement.bind(this) },
+          { onClick: this.decrement },
           " Decrement "
         )
       );
