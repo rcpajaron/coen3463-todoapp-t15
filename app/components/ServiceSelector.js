@@ -36,7 +36,7 @@ class ServiceSelector extends Component {
       <div className='ServiceSelector'>
         <h3>Order Form</h3>
         {services}
-        <h1>Total: {this.state.total}</h1>
+        <h1>Total: ${this.state.total}</h1>
         <div className='Service-list'> </div>
         <div className='Service-total'>
         </div>
