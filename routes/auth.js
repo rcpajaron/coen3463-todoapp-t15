@@ -28,12 +28,17 @@ router.route('/register')
         // return res.render('register', {account: account, error:err});
       }
 
-      req.login(account, function(err,user) {
-        console.log(user)
-        res.send().json({
-          u:user
-        });
-        //res.redirect('/');
+      req.login(account, function(err) {
+        // console.log(account.username)
+        
+        if(err){
+          res.send({error:err})
+        }
+        res.send({message:account})
+        // .json({
+        //   account
+        // });     
+        // res.redirect('/');
       });
     })
   })

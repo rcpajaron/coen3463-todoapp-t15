@@ -5,6 +5,7 @@ import SearchBox from './SearchBox';
 import ServiceSelector from './ServiceSelector';
 import Counter from './Counter';
 import Register from './Register'
+import Login from './Login'
 
 const services = [
     { name: 'Web Development', price: 300 },
@@ -30,24 +31,23 @@ const libraries = [
 ];
 
 class App extends React.Component{
-  constructor(props) {
-      super(props);
-        this.state={
-          username: ""
-        }
-
-  }
+  
 
     render(){
         return(
             <div className="App-section">
                 <div className="App-header">
-                    {this.state.username ? this.state.username: <p>Hello todo!</p>}
+                    {this.props.username ?  this.props.username:<p>Hello todo!</p>}
                     
                 </div>
 
                 <div className="App-section">
+                    {console.log(this.props.username)}
                     <Register />
+                </div>
+                <div className="App-section">
+                    {console.log(this.props.username)}
+                    <Login />
                 </div>
                 <div className="App-section">
                     <TodoList />

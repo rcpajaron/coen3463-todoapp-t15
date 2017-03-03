@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
   super(props);
     this.state={
@@ -8,20 +8,18 @@ class Register extends Component {
       username: "",
       error: "",
     }
-    this.register = this.register.bind(this)
+    this.login = this.login.bind(this)
   }
 
   
-  register(){
-        const registerAPI = '/auth/register';
+  login(){
+        const login = '/auth/login';
         var body = {username: this.refs.username.value,
                     password: this.refs.password.value,
-                    first_name: this.refs.first_name.value,
-                    last_name: this.refs.last_name.value,
-                    email: this.refs.email.value,
+                    
                     }
         // call api, make sure to include api key in headers
-        fetch(registerAPI, {
+        fetch(login, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -67,24 +65,11 @@ class Register extends Component {
           <label>password</label>
           <input type="password" placeholder="" ref="password"> 
           </input>
-          <br/>
-          <label>First name</label>
-          <input type="text" placeholder="" ref="first_name"> 
-          </input>
-          <br/>
-          <label>Last name</label>
-          <input type="text" placeholder="" ref="last_name"> 
-          </input>
-          <br/>
-          <label>Email</label>
-          <input type="text" placeholder="" ref="email"> 
-          </input>
-          <br/>
-          <button onClick={this.register} value="Register">Register</button>
+          <button onClick={this.login} value="Register">Login</button>
         
 
       </div>
     )
   }
 }
-export default Register;
+export default Login;

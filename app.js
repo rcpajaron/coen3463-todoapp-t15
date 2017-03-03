@@ -64,8 +64,8 @@ mongoose.connect(MongoURI, function(err, res) {
     }
 });
 
-// restify.serve(router, Department);
-// app.use(router);
+restify.serve(router, User);
+app.use(router);
 
 app.use('/', index);
 app.use('/auth', auth);
