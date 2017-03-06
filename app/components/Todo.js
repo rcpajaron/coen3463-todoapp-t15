@@ -1,5 +1,9 @@
-import React from 'react'
-import './App.css';
+import React, {PropTypes} from 'react';
+import '../components/App.css';
+import TodoList from '../components/todologic/TodoList.js';
+import SearchBox from '../components/todologic/SearchBox';
+import ServiceSelector from '../components/todologic/ServiceSelector';
+import Counter from '../components/todologic/Counter';
 
 const services = [
     { name: 'Web Development', price: 300 },
@@ -24,27 +28,24 @@ const libraries = [
     { name: 'Koa', url: 'http://koajs.com/'},
 ];
 
-class App extends React.Component{
-    constructor(props) {
-    super(props);
+function Todo(props){
     
-    }
-    render(){
-        return(
-            <div className="App-section">
-                <div className="App-header">
-                    <p>Hello todo!</p>
-                    
+
+    return(
+        <div className="App-section">
+                <div className="App-section">
+                    <TodoList />
                 </div>
-
-                {this.props.children}
-            </div>
-        );
-    }
+                <div className="App-section">
+                    <Counter />
+                </div>
+                <div className="App-section">
+                <SearchBox items={libraries} />
+                </div>
+                <div className="App-section">
+                  <ServiceSelector items={services} />
+                </div>
+        </div>
+    );
 }
-
-export default App;
-
-//header
-    //body
-//footeer
+export default Todo;

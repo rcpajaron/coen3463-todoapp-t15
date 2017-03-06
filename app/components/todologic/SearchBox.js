@@ -24,7 +24,7 @@ class SearchBox extends React.Component {
     this.props.items.forEach((item,index) => {
       if(item.name.toLowerCase().indexOf(this.state.query) > -1){
       librarycomponents.push(
-          <li>{this.props.items[index].name} <a href={this.props.items[index].url}>{this.props.items[index].url}</a></li>
+          <li key={item.index}>{this.props.items[index].name} <a href={this.props.items[index].url}>{this.props.items[index].url}</a></li>
         );
   }
     })

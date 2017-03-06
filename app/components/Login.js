@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AuthApi from '../api/AuthApi';
 
 class Login extends Component {
   constructor(props) {
@@ -6,58 +7,50 @@ class Login extends Component {
     this.state={
       count: 0,
       username: "",
+      user:"",
       error: "",
     }
-    this.login = this.login.bind(this)
+    this.onLogin = this.onLogin.bind(this)
   }
 
   
-  login(){
-        const login = '/auth/login';
-        var body = {username: this.refs.username.value,
-                    password: this.refs.password.value,
-                    
-                    }
-        // call api, make sure to include api key in headers
-        fetch(login, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body)
-        }).then((response) => {
-          try{
-            response.json().then((data) => {
-            // set state based on decoded data
-            // console.log(data.error)
-            this.setState({
-              username:data.message.username
-            }).bind(this);
-          })}
-          catch(e){
-            console.log('error',e)
-            response.json().then((data) => {
-            // set state based on decoded data
+  onLogin(e){
+        e.preventDefault();
+        let data = {
+            username: this.refs.username.value,
+            password: this.refs.password.value,
+        }
+        AuthApi.onLogin(data).then((res)=>{
+            console.log(res);
+            const data = res.data;
+            if(data.success){
+              this.setState({
+                user: data.response._id,
+                username: data.response.username,
+              });
+              window.location = data.redirect;  
+              console.log(data);
+              return;
+            }else{
+              this.setState({
+                error: data.response
+              });
+              console.log(data);
+              console.log("Login Failed!");}
             
-            this.setState({
-              username:data.error
-            }).bind(this);
-          })
-          }
-
-          
-          // console.log(response)
-          // decode response to json
-        
-        })
-  }
+            
+        }).catch((err)=>{
+          console.log(err);
+        });
+       
+    }
 
 
   render() {
     return (
       <div className="counter">
-          <p>{this.state.username}</p>
+          <p>{this.state.user}</p>
+          {this.state.user?<p>{this.state.username}</p>:<p>{this.state.error}</p>}
           <label>username</label>
           <input type="text" placeholder="" ref="username">
           </input>
@@ -65,7 +58,10 @@ class Login extends Component {
           <label>password</label>
           <input type="password" placeholder="" ref="password"> 
           </input>
-          <button onClick={this.login} value="Register">Login</button>
+          
+          {this.state.username? <button href={'/'} value="Log Out">Log out</button>
+          :<button onClick={this.onLogin} value="Register">Login</button> }
+          
         
 
       </div>

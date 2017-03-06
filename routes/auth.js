@@ -47,6 +47,11 @@ router.get('/log-in', function(req, res, next) {
 
 });
 
+// router.get('/', function(req, res, next) {
+//   res.render('index')
+
+// });
+
 // passport.use(new LocalStrategy(
 //   function(username, password, done) {
 //     User.findOne({ username: username }, function (err, user) {
@@ -65,11 +70,43 @@ router.get('/log-in', function(req, res, next) {
 // ));
 
 
-router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/auth/log-in'}),
-  function(req, res) {
-    res.redirect('/');
+// router.post('/login',
+//   passport.authenticate('local', { failureRedirect: '/auth/log-in'}),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
+
+router.post('/login', function(req, res, next) {
+  User.authenticate()(req.body.username, req.body.password,(err, user, options)=>{
+    if (err) return res.status(500).json({
+      success:false,
+      title:'Error',
+      response:err
+    });
+    if (user === false) {
+      return res.json({
+        success: false,
+        title: 'Error',
+        response: options.message,
+      });
+    } else {
+        req.login(user,(err)=>{
+           if (err) return res.status(500).json({
+            success:false,
+            title:'Error',
+            response:err
+          });
+          console.log(req.user);
+          res.status(200).json({
+            success: true,
+            title: 'Success',
+            response: user,
+            redirect:'/todo'
+          });
+        });
+      }
   });
+});
 
 router.all('/logout', function(req, res, next) {
   req.logout();
