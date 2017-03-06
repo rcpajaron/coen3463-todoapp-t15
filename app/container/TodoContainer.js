@@ -1,12 +1,16 @@
 import React from 'react';
 import Todo from '../components/Todo';
 import AuthApi from '../api/AuthApi';
+import Loading from '../components/loading'
 
 class TodoContainer extends React.Component{
     constructor(props){
         super(props);
         this.state={
-        	user:''
+        	user:'',
+            email: '',
+            username: '',
+            isLoading: true,
         }
     }
 
@@ -19,7 +23,10 @@ class TodoContainer extends React.Component{
             AuthApi.onGetUser().then((res)=>{
                 if(res.data.response){
                     this.setState({
-                        user: res.data.response._id
+                        user: res.data.response._id,
+                        email: res.data.response.email,
+                        username: res.data.response.username,
+                        isLoading: false,
                     });
                     //then getowntodos
                     // TodoApi.onGetOwnTodo(res.data.response._id)
@@ -41,23 +48,7 @@ class TodoContainer extends React.Component{
         AuthApi.onLogout().then((res)=>{
             console.log(res);
             console.log("Logout Success!")
-            // const data = res.data;
-            // if(data.success){
-            //   this.setState({
-            //     user: data.response._id,
-            //     username: data.response.username,
-            //   });
-            window.location = res.data.redirect;  
-            //   console.log(data);
-            //   return;
-            // }else{
-            //   this.setState({
-            //     error: data.response
-            //   });
-            //   console.log(data);
-            //   console.log("Login Failed!");}
-            
-            
+            window.location = res.data.redirect;        
         }).catch((err)=>{
           console.log(err);
         });
@@ -67,7 +58,8 @@ class TodoContainer extends React.Component{
     render(){
         console.log("Todo");
         return(
-            <Todo handlelogout={this.onLogout}/>
+            
+            <Todo handlelogout={this.onLogout} name={this.state.username} email={this.state.email} isLoading={this.state.isLoading}/>
         )
     }
 }

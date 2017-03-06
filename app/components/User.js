@@ -5,19 +5,28 @@ import Register from '../components/Register.js';
 
 
 
-
 function User(props){
-    
-
     return(
-        <div className="App-section">
+        <div>
+            {props.login?
                 <div className="App-section">
-                    <Login />
-                </div>
-                <div className="App-section">
+                    <Login/>   
+                    <br/>
+                    <button onClick={props.switch} value="RegForm">Register</button> 
+                </div>:
+                <div className="App-section">                  
                     <Register />
+                    <br/>
+                    <button onClick={props.switch} value="LoginForm">Back</button>
                 </div>
+            }
         </div>
     );
 }
+
+User.PropTypes = {
+    login: PropTypes.bool.isRequired,
+    switch: PropTypes.func.isRequired,
+}
+
 export default User;

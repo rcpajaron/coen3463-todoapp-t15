@@ -13338,11 +13338,11 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+__webpack_require__(75);
+
 var _AuthApi = __webpack_require__(77);
 
 var _AuthApi2 = _interopRequireDefault(_AuthApi);
-
-__webpack_require__(75);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13361,12 +13361,12 @@ var Login = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
     _this.state = {
-      count: 0,
       username: "",
       user: "",
       error: ""
     };
     _this.onLogin = _this.onLogin.bind(_this);
+
     return _this;
   }
 
@@ -13409,20 +13409,7 @@ var Login = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'counter' },
-        _react2.default.createElement(
-          'p',
-          null,
-          this.state.user
-        ),
-        this.state.user ? _react2.default.createElement(
-          'p',
-          null,
-          this.state.username
-        ) : _react2.default.createElement(
-          'p',
-          null,
-          this.state.error
-        ),
+        this.state.error,
         _react2.default.createElement(
           'label',
           null,
@@ -13436,13 +13423,10 @@ var Login = function (_Component) {
           'password'
         ),
         _react2.default.createElement('input', { type: 'password', placeholder: '', ref: 'password' }),
-        this.state.username ? _react2.default.createElement(
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
           'button',
-          { href: '/', value: 'Log Out' },
-          'Log out'
-        ) : _react2.default.createElement(
-          'button',
-          { onClick: this.onLogin, value: 'Register' },
+          { onClick: this.onLogin, value: 'Login' },
           'Login'
         )
       );
@@ -13596,11 +13580,6 @@ var Register = function (_Component) {
         _react2.default.createElement(
           'p',
           null,
-          this.state.username
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
           this.state.emailerror
         ),
         _react2.default.createElement(
@@ -13690,46 +13669,74 @@ var _Counter = __webpack_require__(127);
 
 var _Counter2 = _interopRequireDefault(_Counter);
 
+var _loading = __webpack_require__(281);
+
+var _loading2 = _interopRequireDefault(_loading);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var services = [{ name: 'Web Development', price: 300 }, { name: 'Design', price: 400 }, { name: 'Integration', price: 250 }, { name: 'Training', price: 220 }];
 var libraries = [{ name: 'Backbone.js', url: 'http://documentcloud.github.io/backbone/' }, { name: 'AngularJS', url: 'https://angularjs.org/' }, { name: 'jQuery', url: 'http://jquery.com/' }, { name: 'Prototype', url: 'http://www.prototypejs.org/' }, { name: 'React', url: 'http://facebook.github.io/react/' }, { name: 'Ember', url: 'http://emberjs.com/' }, { name: 'Knockout.js', url: 'http://knockoutjs.com/' }, { name: 'Dojo', url: 'http://dojotoolkit.org/' }, { name: 'Mootools', url: 'http://mootools.net/' }, { name: 'Underscore', url: 'http://documentcloud.github.io/underscore/' }, { name: 'Lodash', url: 'http://lodash.com/' }, { name: 'Moment', url: 'http://momentjs.com/' }, { name: 'Express', url: 'http://expressjs.com/' }, { name: 'Koa', url: 'http://koajs.com/' }];
 
 function Todo(props) {
+    // return(
+    //     <div className="App-section">
 
+    //             {props.isLoading? 
+
+    //             <Loading text="Please Wait" speed={300}/>
+    //             :
+    //             <div>
+    //             <p>{props.name}</p>
+    //             <p>{props.email}</p>
+    //             <div className="App-section">
+    //                 <TodoList />
+    //             </div>
+    //             <div className="App-section">
+    //                 <Counter />
+    //             </div>
+    //             <div className="App-section">
+    //             <SearchBox items={libraries} />
+    //             </div>
+    //             <div className="App-section">
+    //               <ServiceSelector items={services} />
+    //             </div>
+    //             <div className="App-section">
+    //               <ServiceSelector items={services} />
+    //             </div>
+    //             <br/>
+    //             <button onClick={props.handlelogout} value="Logout">Logout</button>
+    //             </div>
+    //             }
+    //     </div>
+    // );
     return _react2.default.createElement(
         'div',
         { className: 'App-section' },
-        _react2.default.createElement(
+        props.isLoading ? _react2.default.createElement(_loading2.default, { text: 'Please Wait', speed: 300 }) : _react2.default.createElement(
             'div',
-            { className: 'App-section' },
-            _react2.default.createElement(_TodoList2.default, null)
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'App-section' },
-            _react2.default.createElement(_Counter2.default, null)
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'App-section' },
-            _react2.default.createElement(_SearchBox2.default, { items: libraries })
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'App-section' },
-            _react2.default.createElement(_ServiceSelector2.default, { items: services })
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'App-section' },
-            _react2.default.createElement(_ServiceSelector2.default, { items: services })
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-            'button',
-            { onClick: props.handlelogout, value: 'Logout' },
-            'Logout'
+            null,
+            _react2.default.createElement(
+                'p',
+                null,
+                props.name
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                props.email
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'App-section' },
+                _react2.default.createElement(_TodoList2.default, null)
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+                'button',
+                { onClick: props.handlelogout, value: 'Logout' },
+                'Logout'
+            )
         )
     );
 }
@@ -13768,22 +13775,38 @@ var _Register2 = _interopRequireDefault(_Register);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function User(props) {
-
     return _react2.default.createElement(
         'div',
-        { className: 'App-section' },
-        _react2.default.createElement(
+        null,
+        props.login ? _react2.default.createElement(
             'div',
             { className: 'App-section' },
-            _react2.default.createElement(_Login2.default, null)
-        ),
-        _react2.default.createElement(
+            _react2.default.createElement(_Login2.default, null),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+                'button',
+                { onClick: props.switch, value: 'RegForm' },
+                'Register'
+            )
+        ) : _react2.default.createElement(
             'div',
             { className: 'App-section' },
-            _react2.default.createElement(_Register2.default, null)
+            _react2.default.createElement(_Register2.default, null),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+                'button',
+                { onClick: props.switch, value: 'LoginForm' },
+                'Back'
+            )
         )
     );
 }
+
+User.PropTypes = {
+    login: _react.PropTypes.bool.isRequired,
+    switch: _react.PropTypes.func.isRequired
+};
+
 exports.default = User;
 
 /***/ }),
@@ -14320,14 +14343,14 @@ var TodoList = function (_Component) {
       newProductAddButton = _react2.default.createElement(
         'button',
         { className: 'add-product', onClick: this.addTodoItem },
-        'Add new Product'
+        'Add new todo'
       );
       clearListButton = _react2.default.createElement(
         'button',
         { className: 'clear-list', onClick: this.clearList },
         'Clear the List'
       );
-      var title = 'My Grocery List (' + this.state.completedCount + '/' + this.state.groceries.length + ')';
+      var title = 'Todo List (' + this.state.completedCount + '/' + this.state.groceries.length + ')';
       return _react2.default.createElement(
         'div',
         { className: 'grocery-list' },
@@ -14388,6 +14411,10 @@ var _AuthApi = __webpack_require__(77);
 
 var _AuthApi2 = _interopRequireDefault(_AuthApi);
 
+var _loading = __webpack_require__(281);
+
+var _loading2 = _interopRequireDefault(_loading);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14405,7 +14432,10 @@ var TodoContainer = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (TodoContainer.__proto__ || Object.getPrototypeOf(TodoContainer)).call(this, props));
 
         _this.state = {
-            user: ''
+            user: '',
+            email: '',
+            username: '',
+            isLoading: true
         };
         return _this;
     }
@@ -14423,7 +14453,10 @@ var TodoContainer = function (_React$Component) {
                 _AuthApi2.default.onGetUser().then(function (res) {
                     if (res.data.response) {
                         _this2.setState({
-                            user: res.data.response._id
+                            user: res.data.response._id,
+                            email: res.data.response.email,
+                            username: res.data.response.username,
+                            isLoading: false
                         });
                         //then getowntodos
                         // TodoApi.onGetOwnTodo(res.data.response._id)
@@ -14445,22 +14478,7 @@ var TodoContainer = function (_React$Component) {
             _AuthApi2.default.onLogout().then(function (res) {
                 console.log(res);
                 console.log("Logout Success!");
-                // const data = res.data;
-                // if(data.success){
-                //   this.setState({
-                //     user: data.response._id,
-                //     username: data.response.username,
-                //   });
                 window.location = res.data.redirect;
-                //   console.log(data);
-                //   return;
-                // }else{
-                //   this.setState({
-                //     error: data.response
-                //   });
-                //   console.log(data);
-                //   console.log("Login Failed!");}
-
             }).catch(function (err) {
                 console.log(err);
             });
@@ -14469,7 +14487,7 @@ var TodoContainer = function (_React$Component) {
         key: 'render',
         value: function render() {
             console.log("Todo");
-            return _react2.default.createElement(_Todo2.default, { handlelogout: this.onLogout });
+            return _react2.default.createElement(_Todo2.default, { handlelogout: this.onLogout, name: this.state.username, email: this.state.email, isLoading: this.state.isLoading });
         }
     }]);
 
@@ -14513,14 +14531,31 @@ var UserContainer = function (_React$Component) {
     function UserContainer(props) {
         _classCallCheck(this, UserContainer);
 
-        return _possibleConstructorReturn(this, (UserContainer.__proto__ || Object.getPrototypeOf(UserContainer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (UserContainer.__proto__ || Object.getPrototypeOf(UserContainer)).call(this, props));
+
+        _this.state = {
+            login: true
+        };
+        _this.switch = _this.switch.bind(_this);
+        return _this;
     }
 
     _createClass(UserContainer, [{
+        key: 'switch',
+        value: function _switch(e) {
+            var laststate = this.state.login;
+            {
+                laststate === true ? this.setState({
+                    login: false
+                }) : this.setState({
+                    login: true
+                });
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            console.log("Login Register");
-            return _react2.default.createElement(_User2.default, null);
+            return _react2.default.createElement(_User2.default, { login: this.state.login, 'switch': this.switch });
         }
     }]);
 
@@ -30309,6 +30344,123 @@ var _routes2 = _interopRequireDefault(_routes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _reactDom.render)(_routes2.default, document.getElementById('app'));
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var React = __webpack_require__(4);
+var PropTypes = React.PropTypes;
+
+var styles = {
+	container: {
+		position: 'fixed',
+		left: 0,
+		right: 0,
+		top: 0,
+		bottom: 0,
+		fontsize: '55px'
+	},
+	content: {
+		textAlign: 'center',
+		position: 'absolute',
+		width: '100px',
+		marginTop: '30px'
+	}
+};
+
+var Loading = React.createClass({
+	displayName: 'Loading',
+
+	propTypes: {
+		text: PropTypes.string,
+		speed: PropTypes.number
+	},
+	getDefaultProps: function getDefaultProps() {
+		return {
+			text: 'Loading',
+			speed: 300
+		};
+	},
+	getInitialState: function getInitialState() {
+		this.originalText = this.props.text;
+		return {
+			text: this.originalText
+		};
+	},
+	componentDidMount: function componentDidMount() {
+		var stopper = this.originalText + '...';
+		this.interval = setInterval(function () {
+			if (this.state.text === stopper) {
+				this.setState({
+					text: this.originalText
+				});
+			} else {
+				this.setState({
+					text: this.state.text + '.'
+				});
+			}
+		}.bind(this), this.props.speed);
+	},
+	componentWillUnmount: function componentWillUnmount() {
+		clearInterval(this.interval);
+	},
+	render: function render() {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'p',
+				null,
+				this.state.text
+			)
+		);
+	}
+
+});
+
+module.exports = Loading;
+
+// var PropTypes = React.PropTypes;
+// var styls = require('../styles');
+// var ReactRouter = require('react-router');
+// var Link = ReactRouter.Link
+// var UserDetails = require('./UserDetails');
+// var UserDetailsWrapper = require(./UserDetailsWrapper);
+// var MainContainer = require(./MainContainer);
+
+// function StartOver () {
+// 	return (
+// 		<div className='col-sm-12' style={styles.space}>
+// 			<Link to='/playerOne'>
+// 				<button type='button' className='btn btn-lg btn-danger'>Start Over</button>
+// 			</Link>
+// 		</div>	
+// 	)
+// }
+
+// function Tie (props) {
+// 	return (
+// 		<MainContainer>
+// 			<h1>It's a Tie!</h1>
+// 			<StartOver />
+// 		</MainContainer	
+// 	)
+// }
+// function Results (props) {
+// 	if (props.isLoading === true) {
+// 		return<p> Loading </p>			
+// 	}
+// 	if (props.scores[0] === props.scores[1]) {
+// 		return (
+// 			<Tie scores={props.scores} playersInfo={props.playersInfo}/>
+// 		)
+// 	}
+// 	var winningIndex = 
+// }
 
 /***/ })
 /******/ ]);

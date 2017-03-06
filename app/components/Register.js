@@ -100,7 +100,6 @@ class Register extends Component {
   render() {
     return (
       <div className="counter">
-          <p>{this.state.username}</p>
           <p>{this.state.emailerror}</p>
           <p>{this.state.error}</p>
           <label>username</label>

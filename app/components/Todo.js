@@ -4,6 +4,7 @@ import TodoList from '../components/todologic/TodoList.js';
 import SearchBox from '../components/todologic/SearchBox';
 import ServiceSelector from '../components/todologic/ServiceSelector';
 import Counter from '../components/todologic/Counter';
+import Loading from './loading';
 
 const services = [
     { name: 'Web Development', price: 300 },
@@ -29,28 +30,54 @@ const libraries = [
 ];
 
 function Todo(props){
-    
-
+    // return(
+    //     <div className="App-section">
+                
+    //             {props.isLoading? 
+                
+    //             <Loading text="Please Wait" speed={300}/>
+    //             :
+    //             <div>
+    //             <p>{props.name}</p>
+    //             <p>{props.email}</p>
+    //             <div className="App-section">
+    //                 <TodoList />
+    //             </div>
+    //             <div className="App-section">
+    //                 <Counter />
+    //             </div>
+    //             <div className="App-section">
+    //             <SearchBox items={libraries} />
+    //             </div>
+    //             <div className="App-section">
+    //               <ServiceSelector items={services} />
+    //             </div>
+    //             <div className="App-section">
+    //               <ServiceSelector items={services} />
+    //             </div>
+    //             <br/>
+    //             <button onClick={props.handlelogout} value="Logout">Logout</button>
+    //             </div>
+    //             }
+    //     </div>
+    // );
     return(
         <div className="App-section">
+                
+                {props.isLoading? 
+                
+                <Loading text="Please Wait" speed={300}/>
+                :
+                <div>
+                <p>{props.name}</p>
+                <p>{props.email}</p>
                 <div className="App-section">
                     <TodoList />
                 </div>
-                <div className="App-section">
-                    <Counter />
-                </div>
-                <div className="App-section">
-                <SearchBox items={libraries} />
-                </div>
-                <div className="App-section">
-                  <ServiceSelector items={services} />
-                </div>
-                <div className="App-section">
-                  <ServiceSelector items={services} />
-                </div>
                 <br/>
                 <button onClick={props.handlelogout} value="Logout">Logout</button>
-                
+                </div>
+                }
         </div>
     );
 }

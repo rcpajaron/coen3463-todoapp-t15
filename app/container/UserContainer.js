@@ -4,14 +4,25 @@ import User from '../components/User';
 class UserContainer extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+            login: true
+        }
+        this.switch = this.switch.bind(this)
+    }
+    switch(e){
+      var laststate = this.state.login
+      {laststate === true?
+      this.setState({
+        login: false
+      }):
+      this.setState({
+        login: true
+      });}
     }
 
-    
-
     render(){
-        console.log("Login Register");
         return(
-            <User/>
+            <User login={this.state.login} switch={this.switch}/>
         )
     }
 }

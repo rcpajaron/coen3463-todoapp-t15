@@ -1,4 +1,5 @@
 var React = require('react');
+var PropTypes = React.PropTypes;
 
 var styles = {
 	container:{
@@ -19,8 +20,8 @@ var styles = {
 
 var Loading = React.createClass({
 	propTypes: {
-		text: Protypes.string,
-		speed: PropTypes.number
+		text: PropTypes.string,
+		speed:PropTypes.number
 	},
 	getDefaultProps: function () {
 		return {
@@ -35,7 +36,7 @@ var Loading = React.createClass({
 		}
 	},
 	componentDidMount: function() {
-		var stopper = thi.originalText + '...';
+		var stopper = this.originalText + '...';
 		this.interval = setInterval(function () {
 			if (this.state.text === stopper) {
 				this.setState({
@@ -53,8 +54,8 @@ var Loading = React.createClass({
 	},	
 	render: function() {
 		return (
-			<div style={styles.container}>
-				<p style={styles.content}>{this.state.text}</p>
+			<div>
+				<p >{this.state.text}</p>
 			</div>	
 		);
 	}
