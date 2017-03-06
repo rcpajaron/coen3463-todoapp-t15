@@ -2,8 +2,8 @@ import React from 'react';
 import User from '../components/User';
 
 class UserContainer extends React.Component{
-    constructor(props){
-        super(props);
+    constructor(props,context){
+        super(props,context);
         this.state={
             login: true
         }

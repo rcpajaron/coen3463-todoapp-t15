@@ -9209,6 +9209,10 @@ var App = function (_React$Component) {
     return App;
 }(_react2.default.Component);
 
+App.contextTypes = {
+    router: _react2.default.PropTypes.object.isRequired
+};
+
 exports.default = App;
 
 //header
@@ -13472,10 +13476,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Login = function (_Component) {
   _inherits(Login, _Component);
 
-  function Login(props) {
+  function Login(props, context) {
     _classCallCheck(this, Login);
 
-    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props, context));
 
     _this.state = {
       username: "",
@@ -13505,7 +13509,7 @@ var Login = function (_Component) {
             user: res.data.response._id,
             username: data.response.username
           });
-          _this2.props.router.push('/todo');
+          _this2.context.router.push('/todo');
           // window.location = data.redirect;
           console.log(data);
           return;
@@ -13678,7 +13682,7 @@ var Register = function (_Component) {
             user: data.response._id,
             username: data.response.username
           });
-          _this2.props.router.push('/todo');
+          _this2.context.router.push('/todo');
           console.log(data);
           return;
         } else {
@@ -13755,6 +13759,9 @@ var Register = function (_Component) {
   return Register;
 }(_react.Component);
 
+Register.contextTypes = {
+  router: _react2.default.PropTypes.object.isRequired
+};
 exports.default = Register;
 
 /***/ }),
@@ -13799,7 +13806,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var services = [{ name: 'Web Development', price: 300 }, { name: 'Design', price: 400 }, { name: 'Integration', price: 250 }, { name: 'Training', price: 220 }];
 var libraries = [{ name: 'Backbone.js', url: 'http://documentcloud.github.io/backbone/' }, { name: 'AngularJS', url: 'https://angularjs.org/' }, { name: 'jQuery', url: 'http://jquery.com/' }, { name: 'Prototype', url: 'http://www.prototypejs.org/' }, { name: 'React', url: 'http://facebook.github.io/react/' }, { name: 'Ember', url: 'http://emberjs.com/' }, { name: 'Knockout.js', url: 'http://knockoutjs.com/' }, { name: 'Dojo', url: 'http://dojotoolkit.org/' }, { name: 'Mootools', url: 'http://mootools.net/' }, { name: 'Underscore', url: 'http://documentcloud.github.io/underscore/' }, { name: 'Lodash', url: 'http://lodash.com/' }, { name: 'Moment', url: 'http://momentjs.com/' }, { name: 'Express', url: 'http://expressjs.com/' }, { name: 'Koa', url: 'http://koajs.com/' }];
 
-function Todo(props) {
+function Todo(props, context) {
     // return(
     //     <div className="App-section">
 
@@ -14547,10 +14554,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var TodoContainer = function (_React$Component) {
     _inherits(TodoContainer, _React$Component);
 
-    function TodoContainer(props) {
+    function TodoContainer(props, context) {
         _classCallCheck(this, TodoContainer);
 
-        var _this = _possibleConstructorReturn(this, (TodoContainer.__proto__ || Object.getPrototypeOf(TodoContainer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TodoContainer.__proto__ || Object.getPrototypeOf(TodoContainer)).call(this, props, context));
 
         _this.state = {
             user: '',
@@ -14587,7 +14594,7 @@ var TodoContainer = function (_React$Component) {
                         //     })
                         // });
                     } else {
-                        _this2.props.router.push('/');
+                        _this2.context.router.push('/');
                     }
                 });
             }
@@ -14601,7 +14608,7 @@ var TodoContainer = function (_React$Component) {
             _AuthApi2.default.onLogout().then(function (res) {
                 console.log(res);
                 console.log("Logout Success!");
-                _this3.props.router.push('/');
+                _this3.context.router.push('/');
             }).catch(function (err) {
                 console.log(err);
             });
@@ -14619,6 +14626,7 @@ var TodoContainer = function (_React$Component) {
 
 TodoContainer.contextTypes = {
     router: _react2.default.PropTypes.object.isRequired
+
 };
 
 exports.default = TodoContainer;
@@ -14655,10 +14663,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var UserContainer = function (_React$Component) {
     _inherits(UserContainer, _React$Component);
 
-    function UserContainer(props) {
+    function UserContainer(props, context) {
         _classCallCheck(this, UserContainer);
 
-        var _this = _possibleConstructorReturn(this, (UserContainer.__proto__ || Object.getPrototypeOf(UserContainer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (UserContainer.__proto__ || Object.getPrototypeOf(UserContainer)).call(this, props, context));
 
         _this.state = {
             login: true

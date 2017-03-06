@@ -4,8 +4,8 @@ import AuthApi from '../api/AuthApi';
 import Loading from '../components/loading'
 
 class TodoContainer extends React.Component{
-    constructor(props){
-        super(props);
+    constructor(props,context){
+        super(props,context);
         this.state={
         	user:'',
             email: '',
@@ -36,7 +36,7 @@ class TodoContainer extends React.Component{
                     //     })
                     // });
                 }else{
-                    this.props.router.push('/');
+                    this.context.router.push('/');
                 
                 }
             });
@@ -48,7 +48,7 @@ class TodoContainer extends React.Component{
         AuthApi.onLogout().then((res)=>{
             console.log(res);
             console.log("Logout Success!")
-            this.props.router.push('/');       
+            this.context.router.push('/');  
         }).catch((err)=>{
           console.log(err);
         });
@@ -66,6 +66,7 @@ class TodoContainer extends React.Component{
 
 TodoContainer.contextTypes = {
     router: React.PropTypes.object.isRequired
+    
 };
 
 export default TodoContainer;

@@ -82,7 +82,7 @@ class Register extends Component {
                 user: data.response._id,
                 username: data.response.username,
               });
-              this.props.router.push('/todo');
+              this.context.router.push('/todo');
               console.log(data);
               return;
             }else{
@@ -128,4 +128,8 @@ class Register extends Component {
     )
   }
 }
+
+Register.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 export default Register;

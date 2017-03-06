@@ -3,8 +3,8 @@ import './App.css';
 import AuthApi from '../api/AuthApi';
 
 class Login extends Component {
-    constructor(props) {
-      super(props);
+    constructor(props,context) {
+      super(props,context);
         this.state={
           username: "",
           user:"",
@@ -28,7 +28,7 @@ class Login extends Component {
                 user: res.data.response._id,
                 username: data.response.username,
               });
-              this.props.router.push('/todo');
+              this.context.router.push('/todo');
               // window.location = data.redirect;
               console.log(data);
               return;
