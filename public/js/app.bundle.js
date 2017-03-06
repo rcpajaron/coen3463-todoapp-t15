@@ -9158,13 +9158,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _AuthApi;
+
 var _axios = __webpack_require__(135);
 
 var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AuthApi = {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var AuthApi = (_AuthApi = {
 
     onLogin: function onLogin(data) {
         return _axios2.default.post('/auth/login', data).then(function (res) {
@@ -9181,8 +9185,33 @@ var AuthApi = {
         }).catch(function (err) {
             return err;
         });
+    },
+
+    onGetUser: function onGetUser(data) {
+        return _axios2.default.get('/auth/getUser').then(function (res) {
+            console.log(res);
+            return res;
+        }).catch(function (err) {
+            console.log(err);
+        });
     }
-};
+}, _defineProperty(_AuthApi, 'onLogin', function onLogin(data) {
+    return _axios2.default.post('/auth/login', data).then(function (res) {
+        console.log(res);
+        return res;
+    }).catch(function (err) {
+        console.log(err);
+        return err;
+    });
+}), _defineProperty(_AuthApi, 'onLogout', function onLogout(data) {
+    return _axios2.default.get('/auth/logout', data).then(function (res) {
+        console.log(res);
+        return res;
+    }).catch(function (err) {
+        console.log(err);
+        return err;
+    });
+}), _AuthApi);
 
 exports.default = AuthApi;
 
@@ -13313,6 +13342,8 @@ var _AuthApi = __webpack_require__(77);
 
 var _AuthApi2 = _interopRequireDefault(_AuthApi);
 
+__webpack_require__(75);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13354,10 +13385,11 @@ var Login = function (_Component) {
         var data = res.data;
         if (data.success) {
           _this2.setState({
-            user: data.response._id,
+            user: res.data.response._id,
             username: data.response.username
           });
           window.location = data.redirect;
+
           console.log(data);
           return;
         } else {
@@ -13460,11 +13492,13 @@ var Register = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
 
     _this.state = {
-      count: 0,
       username: "",
-      error: ""
+      error: "",
+      emailerror: "",
+      isLoading: false
     };
     _this.onRegister = _this.onRegister.bind(_this);
+    _this.onEmail = _this.onEmail.bind(_this);
     return _this;
   }
 
@@ -13500,8 +13534,24 @@ var Register = function (_Component) {
   // }
 
   _createClass(Register, [{
+    key: 'onEmail',
+    value: function onEmail(e) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (regex.test(this.refs.email.value) === false) {
+        this.setState({
+          emailerror: "Invalid Email"
+        });
+      } else {
+        this.setState({
+          emailerror: "Email is OK!"
+        });
+      }
+    }
+  }, {
     key: 'onRegister',
     value: function onRegister(e) {
+      var _this2 = this;
+
       e.preventDefault();
       // let elements = e.target.elements;
       // if(elements[3].value>6){
@@ -13517,6 +13567,24 @@ var Register = function (_Component) {
       };
       _AuthApi2.default.onRegister(data).then(function (res) {
         console.log(res.data); //access data here //check the console
+        var data = res.data;
+        if (data.success) {
+          _this2.setState({
+            user: data.response._id,
+            username: data.response.username
+          });
+          window.location = data.redirect;
+          console.log(data);
+          return;
+        } else {
+          _this2.setState({
+            error: data.response.message
+          });
+          console.log(data);
+          console.log("Register Failed!");
+        }
+      }).catch(function (err) {
+        console.log(err);
       });
     }
   }, {
@@ -13529,6 +13597,16 @@ var Register = function (_Component) {
           'p',
           null,
           this.state.username
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          this.state.emailerror
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          this.state.error
         ),
         _react2.default.createElement(
           'label',
@@ -13563,7 +13641,7 @@ var Register = function (_Component) {
           null,
           'Email'
         ),
-        _react2.default.createElement('input', { type: 'text', placeholder: '', ref: 'email' }),
+        _react2.default.createElement('input', { type: 'text', placeholder: '', ref: 'email', onKeyPress: this.onEmail }),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'button',
@@ -13641,9 +13719,25 @@ function Todo(props) {
             'div',
             { className: 'App-section' },
             _react2.default.createElement(_ServiceSelector2.default, { items: services })
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'App-section' },
+            _react2.default.createElement(_ServiceSelector2.default, { items: services })
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+            'button',
+            { onClick: props.handlelogout, value: 'Logout' },
+            'Logout'
         )
     );
 }
+
+Todo.PropTypes = {
+    onLogout: _react.PropTypes.func.isRequired
+
+};
 exports.default = Todo;
 
 /***/ }),
@@ -14290,6 +14384,10 @@ var _Todo = __webpack_require__(125);
 
 var _Todo2 = _interopRequireDefault(_Todo);
 
+var _AuthApi = __webpack_require__(77);
+
+var _AuthApi2 = _interopRequireDefault(_AuthApi);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14304,14 +14402,74 @@ var TodoContainer = function (_React$Component) {
     function TodoContainer(props) {
         _classCallCheck(this, TodoContainer);
 
-        return _possibleConstructorReturn(this, (TodoContainer.__proto__ || Object.getPrototypeOf(TodoContainer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TodoContainer.__proto__ || Object.getPrototypeOf(TodoContainer)).call(this, props));
+
+        _this.state = {
+            user: ''
+        };
+        return _this;
     }
 
     _createClass(TodoContainer, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var lastUserState = this.state.user; //get last state of user
+            // let lastItemState = this.setStatee.items; //get last state of items
+            if (lastUserState !== '') {
+                return;
+            } else {
+                _AuthApi2.default.onGetUser().then(function (res) {
+                    if (res.data.response) {
+                        _this2.setState({
+                            user: res.data.response._id
+                        });
+                        //then getowntodos
+                        // TodoApi.onGetOwnTodo(res.data.response._id)
+                        // .then((todos)=>{
+                        //     this.setState({
+                        //         items:[...lastItemState,...todos]
+                        //     })
+                        // });
+                    } else {
+                        _this2.props.router.push('/');
+                    }
+                });
+            }
+        }
+    }, {
+        key: 'onLogout',
+        value: function onLogout(e) {
+            e.preventDefault();
+            _AuthApi2.default.onLogout().then(function (res) {
+                console.log(res);
+                console.log("Logout Success!");
+                // const data = res.data;
+                // if(data.success){
+                //   this.setState({
+                //     user: data.response._id,
+                //     username: data.response.username,
+                //   });
+                window.location = res.data.redirect;
+                //   console.log(data);
+                //   return;
+                // }else{
+                //   this.setState({
+                //     error: data.response
+                //   });
+                //   console.log(data);
+                //   console.log("Login Failed!");}
+
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             console.log("Todo");
-            return _react2.default.createElement(_Todo2.default, null);
+            return _react2.default.createElement(_Todo2.default, { handlelogout: this.onLogout });
         }
     }]);
 

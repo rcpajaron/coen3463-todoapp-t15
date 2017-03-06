@@ -5,11 +5,13 @@ class Register extends Component {
   constructor(props) {
   super(props);
     this.state={
-      count: 0,
       username: "",
       error: "",
+      emailerror:"",
+      isLoading: false
     }
     this.onRegister = this.onRegister.bind(this)
+    this.onEmail = this.onEmail.bind(this)
   }
 
   
@@ -44,6 +46,20 @@ class Register extends Component {
   //       });
   // }
 
+  onEmail(e){
+    var regex= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(regex.test(this.refs.email.value,) ===false){
+        this.setState({
+          emailerror: "Invalid Email"
+        })
+    }else{
+        this.setState({
+          emailerror: "Email is OK!"
+        })
+        
+    }
+  }
+
   onRegister(e){
         e.preventDefault();
         // let elements = e.target.elements;
@@ -60,6 +76,24 @@ class Register extends Component {
         }
         AuthApi.onRegister(data).then((res)=>{
             console.log(res.data); //access data here //check the console
+            const data = res.data;
+            if(data.success){
+              this.setState({  
+                user: data.response._id,
+                username: data.response.username,
+              });
+              window.location = data.redirect;  
+              console.log(data);
+              return;
+            }else{
+              this.setState({
+                error: data.response.message
+              });
+              console.log(data);
+              console.log("Register Failed!");
+            }
+        }).catch((err)=>{
+          console.log(err);
         });
   }
 
@@ -67,6 +101,8 @@ class Register extends Component {
     return (
       <div className="counter">
           <p>{this.state.username}</p>
+          <p>{this.state.emailerror}</p>
+          <p>{this.state.error}</p>
           <label>username</label>
           <input type="text" placeholder="" ref="username">
           </input>
@@ -84,11 +120,10 @@ class Register extends Component {
           </input>
           <br/>
           <label>Email</label>
-          <input type="text" placeholder="" ref="email"> 
+          <input type="text" placeholder="" ref="email" onKeyPress={this.onEmail} > 
           </input>
           <br/>
           <button onClick={this.onRegister} value="Register">Register</button>
-        
 
       </div>
     )

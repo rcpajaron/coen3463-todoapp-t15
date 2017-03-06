@@ -45,7 +45,18 @@ function Todo(props){
                 <div className="App-section">
                   <ServiceSelector items={services} />
                 </div>
+                <div className="App-section">
+                  <ServiceSelector items={services} />
+                </div>
+                <br/>
+                <button onClick={props.handlelogout} value="Logout">Logout</button>
+                
         </div>
     );
+}
+
+Todo.PropTypes = {
+    onLogout: PropTypes.func.isRequired,
+    
 }
 export default Todo;

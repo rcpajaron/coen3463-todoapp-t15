@@ -26,7 +26,8 @@ var User = new Schema({
           },
           message: 'Invalid format of email.'
         },
-    }
+    },
+    todos: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 }, { collection: 'users' });
 
 User.plugin(passportLocalMongoose);

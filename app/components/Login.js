@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
+import './App.css'
 
 class Login extends Component {
   constructor(props) {
@@ -25,10 +26,11 @@ class Login extends Component {
             const data = res.data;
             if(data.success){
               this.setState({
-                user: data.response._id,
+                user: res.data.response._id,
                 username: data.response.username,
               });
               window.location = data.redirect;  
+
               console.log(data);
               return;
             }else{
