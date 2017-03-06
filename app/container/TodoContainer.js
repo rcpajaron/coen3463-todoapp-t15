@@ -12,6 +12,7 @@ class TodoContainer extends React.Component{
             username: '',
             isLoading: true,
         }
+        this.onLogout = this.onLogout.bind(this);
     }
 
     componentDidMount(){
@@ -66,7 +67,7 @@ class TodoContainer extends React.Component{
 
 TodoContainer.contextTypes = {
     router: React.PropTypes.object.isRequired
-    
+
 };
 
 export default TodoContainer;

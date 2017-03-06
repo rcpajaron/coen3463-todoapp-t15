@@ -14565,6 +14565,7 @@ var TodoContainer = function (_React$Component) {
             username: '',
             isLoading: true
         };
+        _this.onLogout = _this.onLogout.bind(_this);
         return _this;
     }
 
