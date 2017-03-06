@@ -48,7 +48,7 @@ class TodoContainer extends React.Component{
         AuthApi.onLogout().then((res)=>{
             console.log(res);
             console.log("Logout Success!")
-            window.location = res.data.redirect;        
+            this.props.router.push('/');       
         }).catch((err)=>{
           console.log(err);
         });
@@ -63,5 +63,9 @@ class TodoContainer extends React.Component{
         )
     }
 }
+
+TodoContainer.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default TodoContainer;

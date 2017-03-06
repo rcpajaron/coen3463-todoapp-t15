@@ -28,8 +28,8 @@ class Login extends Component {
                 user: res.data.response._id,
                 username: data.response.username,
               });
-              window.location = data.redirect;  
-
+              this.props.router.push('/todo');
+              // window.location = data.redirect;
               console.log(data);
               return;
             }else{
@@ -50,6 +50,7 @@ class Login extends Component {
     return (
       <div className="counter">
           {this.state.error}
+          <br/>
           <label>username</label>
           <input type="text" placeholder="" ref="username">
           </input>
@@ -65,4 +66,7 @@ class Login extends Component {
     )
   }
 }
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 export default Login;

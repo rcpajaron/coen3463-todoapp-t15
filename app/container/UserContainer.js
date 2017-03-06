@@ -27,4 +27,8 @@ class UserContainer extends React.Component{
     }
 }
 
+UserContainer.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
 export default UserContainer;

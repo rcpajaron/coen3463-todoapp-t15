@@ -82,7 +82,7 @@ class Register extends Component {
                 user: data.response._id,
                 username: data.response.username,
               });
-              window.location = data.redirect;  
+              this.props.router.push('/todo');
               console.log(data);
               return;
             }else{
