@@ -1,53 +1,53 @@
-var passport = require('passport');
 var User = require('../models/user');
 var express = require('express');
 var router = express.Router();
 var moment = require('moment-timezone');
-var TodoList = require('../models/todolist');
+var Todo = require('../models/todolist');
 
 
-router.route('/addtodo')
-  .post(function(req, res, next) {
-  User.findById(req.body.user, (err, user)=>{
-    if(!req.user){
-        return res.status(401).json({
-            success: false,
-            title: 'Unauthorized'
+router.post('/addtodo', (req,res)=>{
+    User.findById(req.body.user, (err, user)=>{
+        if(!req.user){
+            return res.json({
+                success: false,
+                title: 'Unauthorized'
+            });
+        }
+        if(!user || err){
+             return res.json({
+                success: false,
+                title: 'Error',
+                response: 'Error occured'
+            });
+        }
+        console.log("user found");
+        console.log(user);
+        const todo = new Todo({
+            name: req.body.name,
+            user: user,
+            createDate: moment().tz("Asia/Manila").format('LLL'),
         });
-    }
-    if(!user || err){
-      return res.status(500).json({
-        success: false,
-        title: 'Error',
-        response: err
-    });
-    }
-    console.log("user found");
-    console.log(user);
-    const todolist = new TodoList({
-      name: req.body.username,
-      user: req.body.user,
-      createDate: moment().tz("Asia/Manila").format('LLL'),
-      });
-      todolist.save(function(err, todo) {
-      if(err){
-        console.log(err)
-        return res.status(500).json({
-        success: false,
-        title: 'Error',
-        response: err
+        todo.save((err,todo)=>{
+            if(err){
+                console.log("onerror save");
+                console.log(err)
+               res.json({
+                    success: false,
+                    title: 'Error',
+                    response: err.errors.name.message
+                });
+                return; 
+            }
+            user.todos.push(todo);
+            user.save();
+            console.log("success");
+            res.status(201).json({
+                success:true,
+                title: 'Success',
+                response: todo
+            });
         });
-      }
-      user.mytodo.push(todo);
-      user.save();
-      console.log("success");
-      res.status(201).json({
-          success:true,
-          title: 'Success',
-          response: todo
     });
-  });
-});
 });
 
 module.exports = router;

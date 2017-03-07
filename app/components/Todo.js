@@ -76,14 +76,14 @@ class Todo extends React.Component{
             items :[...lastState,Object.assign({},toDo)]
         });
         TodoApi.onAddTodo(toDo).then(res=>{
-            if(res.data.success){
-                this.setState({ //update items
-                    items :[...lastState,Object.assign({},res.data.response)]
-                });
-                toastr.success("Todo added");
-                // this.setState({isLoadingItem:false});
-                return;
-            }
+            // if(res.data.success){
+            //     this.setState({ //update items
+            //         items :[...lastState,Object.assign({},res.data.response)]
+            //     });
+            //     toastr.success("Todo added");
+            //     // this.setState({isLoadingItem:false});
+            //     return;
+            // }
             // this.setState({isLoadingItem:false});
             // toastr.error(res.data.response);
         }).catch(err=>{
@@ -103,8 +103,8 @@ class Todo extends React.Component{
                 <p>{this.props.name}</p>
                 <p>{this.props.email}</p>
                 <div className="App-section">
-                <form onSubmit={this.props.onAddTodo}>
-                    <input placeholder="Add a To Do item."/>
+                <form onSubmit={this.onAddTodo}>
+                    <input placeholder="Add a To Do item." ref="todo"/>
                     <button type="submit" size="small">+</button>
                 </form>
                 </div>
