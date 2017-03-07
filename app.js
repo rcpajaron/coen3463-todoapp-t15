@@ -17,6 +17,7 @@ const router = express.Router();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var todo = require('./routes/todo');
 
 var MongoURI = 'mongodb://RE:rudeemman@ds161039.mlab.com:61039/module68';
 
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var User = require('./models/user');
+var TodoList = require('./models/todolist');
 
 passport.use(User.createStrategy());
 
@@ -64,11 +66,12 @@ mongoose.connect(MongoURI, function(err, res) {
     }
 });
 
-// restify.serve(router, User);
-// app.use(router);
+restify.serve(router, TodoList);
+app.use(router);
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/todo', todo);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

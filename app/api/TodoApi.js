@@ -1,7 +1,7 @@
 import axios from 'axios';
 var TodoApi = {
-    onAdd: (toDo)=>{
-        return axios.post('/todo/add',toDo)
+    onAddTodo: (toDo)=>{
+        return axios.post('/todo/addtodo',toDo)
         .then((res)=>{
             console.log(res);
             console.log("added");
@@ -9,11 +9,11 @@ var TodoApi = {
             console.log(err);
         });
     },
-    onGetOwnTodo: (id)=>{ //[32312312]
+    onGetTodo: (id)=>{ //[32312312]
         console.log(id);
-        return axios.get('/api/v1/Todo')
-            .then((todos)=>{
-                return todos.data.map((todo)=>{
+        return axios.get('/api/v1/TodoList  ')
+            .then((mytodo)=>{
+                return mytodo.data.map((todo)=>{
                     if(todo.user===id){
                         return todo;
                     }
