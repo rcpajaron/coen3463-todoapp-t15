@@ -25,7 +25,7 @@ router.post('/addtodo', (req,res)=>{
         const todo = new Todo({
             name: req.body.name,
             user: user,
-            createDate: moment().tz("Asia/Manila").format('LLL'),
+            createDate: req.body.createDate,
         });
         todo.save((err,todo)=>{
             if(err){

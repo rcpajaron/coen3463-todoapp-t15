@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var User = require('./models/user');
-var TodoList = require('./models/todolist');
+var Todo = require('./models/todolist');
 
 passport.use(User.createStrategy());
 
@@ -66,7 +66,7 @@ mongoose.connect(MongoURI, function(err, res) {
     }
 });
 
-restify.serve(router, TodoList);
+restify.serve(router, Todo);
 app.use(router);
 
 app.use('/', index);

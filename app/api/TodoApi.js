@@ -11,7 +11,7 @@ var TodoApi = {
     },
     onGetTodo: (id)=>{ //[32312312]
         console.log(id);
-        return axios.get('/api/v1/TodoList  ')
+        return axios.get('/api/v1/Todo  ')
             .then((mytodo)=>{
                 return mytodo.data.map((todo)=>{
                     if(todo.user===id){

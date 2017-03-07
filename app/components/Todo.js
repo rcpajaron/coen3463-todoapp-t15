@@ -3,6 +3,7 @@ import '../components/App.css';
 import ToDos from '../components/ToDos.js';
 import Loading from './loading';
 import TodoApi from '../api/TodoApi';
+var moment = require('moment-timezone');
 
 const services = [
     { name: 'Web Development', price: 300 },
@@ -70,12 +71,13 @@ class Todo extends React.Component{
         let toDo = { //create a todo object to be saved
             name: this.refs.todo.value,
             user: this.props.user,
-            createDate: Date.now(),
+            createDate: moment().tz("Asia/Manila").format('LLL'),
         }
         this.setState({ //update items
             items :[...lastState,Object.assign({},toDo)]
         });
         TodoApi.onAddTodo(toDo).then(res=>{
+            console.log(res)
             // if(res.data.success){
             //     this.setState({ //update items
             //         items :[...lastState,Object.assign({},res.data.response)]
