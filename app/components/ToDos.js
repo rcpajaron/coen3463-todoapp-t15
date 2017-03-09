@@ -5,18 +5,28 @@ import Loading from './loading';
 
 
 
-function ToDos(props,context){
-    return(
-        <div className="App-section">    
-                <div className="App-section">
-                <p>{props.name}</p>
-                </div> 
+const ToDos=(props)=>{
+
+    return (
+        <div className="App-section"> 
+                <li>
+                <p style={{textDecoration:(props.item.isCompleted?'line-through':'none')}}>{props.item.name}</p>
+                <button onClick={(e)=>{
+                                        e.preventDefault()
+                                        props.onComplete(props.item, props.index);
+
+                                    }}>/</button>
+                
+                </li>
+        
         </div>
+
+        
     );
 }
 
-// Todo.PropTypes = {
-//     onAddTodo: PropTypes.func.isRequired,
+ToDos.propTypes = {
+    item: PropTypes.object.isRequired
     
-// }
+}
 export default ToDos;

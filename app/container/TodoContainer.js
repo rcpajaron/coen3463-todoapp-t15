@@ -14,8 +14,12 @@ class TodoContainer extends React.Component{
             username: '',
             isLoading: true,
             items:[],
+            isUpdating: true,
+            isEditing: true,
         }
         this.onLogout = this.onLogout.bind(this);
+        this.handleSetStateItem =  this.handleSetStateItem.bind(this);
+        this.handleOnComplete = this.handleOnComplete.bind(this);
     }
 
     
@@ -37,7 +41,8 @@ class TodoContainer extends React.Component{
                     TodoApi.onGetTodo(res.data.response._id)
                     .then((mytodo)=>{
                         this.setState({
-                            items:[...lastItemState,...mytodo]
+                            items:[...lastItemState,...mytodo],
+                            isUpdating: false,
                         })
                     });
                 }else{
@@ -60,17 +65,38 @@ class TodoContainer extends React.Component{
        
     }
 
+    handleSetStateItem(value){
+        this.setState({items:value});
+    }
+
+    handleOnComplete(todo,index){
+        this.setState({isEditing: true});
+        let lastItems = this.state.items;
+        lastItems[index].completed = !lastItems[index].completed;
+        TodoApi.onEdit(todo._id,"isCompleted",!todo.isCompleted)
+            .then(res=>{
+                if(res.data.success){
+                    if(this.props.routeParams.mode==='completed' || this.props.routeParams.mode==='open'){
+                        lastItems.splice(index,1);
+                    } else {
+                        lastItems.splice(index,1,res.data.response);
+                    }
+                    this.setState({
+                        items: [...lastItems],
+                        completedCount: todo.isCompleted ? this.state.completedCount - 1 : this.state.completedCount + 1,
+                        isEditing: false
+                    });
+                    // toastr.success('Great! You just completed a todo');
+                    return;
+                }
+                this.setState({isEditing:false});
+                // toastr.error(res.data.response);
+            }).catch(err=>{
+                // toastr.error('Ooops! Try again');
+            });;
+    }
+
     render(){
-        console.log("Todo");
-        let displayTodo = [];
-        for(let x=0; x<this.state.items.length;x++){
-            displayTodo.push(
-                <ToDos
-                    // key={x}
-                    name={this.state.items[x].name}
-                />
-            );
-        }
         return(
             <div>
             <Todo onLogOut={this.onLogout} 
@@ -79,8 +105,11 @@ class TodoContainer extends React.Component{
                 isLoading={this.state.isLoading}
                 user={this.state.user}
                 items={this.state.items}
+                setStateItem={this.handleSetStateItem}
+                todoItems={this.state.items}
+                onComplete={this.handleOnComplete}
+                onUpdate={this.state.isUpdating}
             />
-            {displayTodo}
             </div>
         )
     }

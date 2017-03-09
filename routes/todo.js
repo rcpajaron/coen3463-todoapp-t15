@@ -38,7 +38,7 @@ router.post('/addtodo', (req,res)=>{
                 });
                 return; 
             }
-            user.todos.push(todo);
+            user.mytodo.push(todo);
             user.save();
             console.log("success");
             res.status(201).json({
@@ -47,6 +47,44 @@ router.post('/addtodo', (req,res)=>{
                 response: todo
             });
         });
+    });
+});
+
+router.patch('/:id/:field/:value', (req, res)=>{
+    Todo.findById(req.params.id, (err, todo)=>{
+        if(err){
+            return res.json({
+                success:false,
+                response: 'Error occured'
+            });
+        }
+        if(!req.user){
+            return res.json({
+                success:false,
+                response: 'User not found'
+            })
+        }
+        if(!todo){
+            return res.json({
+                success:false,
+                reponse: 'Todo not found'
+            });
+        }
+        console.log(req.params.value);
+        todo[req.params.field]=req.params.value;
+        todo.save((err, todo)=>{
+            if(err){
+                return res.json({
+                    success:false,
+                    response: 'Error occured!'
+                })
+            }
+            res.json({
+                success:true,
+                response: todo
+            });
+        });
+
     });
 });
 

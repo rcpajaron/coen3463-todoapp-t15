@@ -31,40 +31,10 @@ const libraries = [
 class Todo extends React.Component{
     constructor(props,context){
         super(props,context);
-        this.state={}
+        this.state={
+        }
         this.onAddTodo = this.onAddTodo.bind(this);
     }
-    // return(
-    //     <div className="App-section">
-                
-    //             {props.isLoading? 
-                
-    //             <Loading text="Please Wait" speed={300}/>
-    //             :
-    //             <div>
-    //             <p>{props.name}</p>
-    //             <p>{props.email}</p>
-    //             <div className="App-section">
-    //                 <TodoList />
-    //             </div>
-    //             <div className="App-section">
-    //                 <Counter />
-    //             </div>
-    //             <div className="App-section">
-    //             <SearchBox items={libraries} />
-    //             </div>
-    //             <div className="App-section">
-    //               <ServiceSelector items={services} />
-    //             </div>
-    //             <div className="App-section">
-    //               <ServiceSelector items={services} />
-    //             </div>
-    //             <br/>
-    //             <button onClick={props.handlelogout} value="Logout">Logout</button>
-    //             </div>
-    //             }
-    //     </div>
-    // );
     onAddTodo(e) {
         e.preventDefault();
         var lastState = this.props.items; //get last state of item
@@ -77,16 +47,15 @@ class Todo extends React.Component{
             items :[...lastState,Object.assign({},toDo)]
         });
         TodoApi.onAddTodo(toDo).then(res=>{
-            console.log(res)
-            // if(res.data.success){
-            //     this.setState({ //update items
-            //         items :[...lastState,Object.assign({},res.data.response)]
-            //     });
-            //     toastr.success("Todo added");
-            //     // this.setState({isLoadingItem:false});
-            //     return;
-            // }
-            // this.setState({isLoadingItem:false});
+            //this.props.set(todo);
+            console.log(res.data.response);
+            if(res.data.success){
+                this.props.setStateItem([...lastState,Object.assign({},res.data.response)]);
+                // alert("Todo added");
+                // this.setState({isLoadingItem:false});
+                return;
+            }
+            //this.setState({isLoadingItem:false});
             // toastr.error(res.data.response);
         }).catch(err=>{
             // toastr.error('Ooops! Try again');
@@ -111,7 +80,17 @@ class Todo extends React.Component{
                 </form>
                 </div>
                 <div className="App-section">
-                    <ToDos />
+                {this.props.onUpdate? <Loading text="Loading" speed={300}/>:
+                <div>
+                {this.props.items.map((item, index)=>
+
+                    <ToDos key={index}
+                            item={item}
+                            index={index}
+                            onComplete={this.props.onComplete}/>
+                )};
+                </div>
+                }
                 </div>
                 <br/>
                 <button onClick={this.props.onLogOut} value="Logout">Logout</button>
