@@ -11,7 +11,12 @@ const ToDos=(props)=>{
                 <button onClick={(e)=>{
                                         e.preventDefault()
                                         props.onComplete(props.item, props.index);
-                                    }}>/</button></p>
+                                    }}>/</button>
+                <button size="small"onClick={(e)=>{
+                                        e.preventDefault()
+                                        props.OnDelete(props.item, props.index);
+                                    }}>X</button>
+                </p>
                 </li>
     );
 }

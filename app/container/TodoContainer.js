@@ -16,17 +16,23 @@ class TodoContainer extends React.Component{
             items:[],
             isUpdating: true,
             isEditing: true,
+            isCounting: true,
+            completedCount: 0,
+            originalitems: 0,
         }
         this.onLogout = this.onLogout.bind(this);
         this.handleSetStateItem =  this.handleSetStateItem.bind(this);
         this.handleOnComplete = this.handleOnComplete.bind(this);
+        this.todoOpen = this.todoOpen.bind(this);
+        this.todoAll = this.todoAll.bind(this);
+        this.todoCompleted = this.todoCompleted.bind(this);
+        this.OnDelete = this.OnDelete.bind(this);
+        this.handleitems = this.handleitems.bind(this);
     }
 
-    
-
     componentDidMount(){
-        let lastUserState = this.state.user; //get last state of user
-        let lastItemState = this.state.items; //get last state of items
+        let lastUserState = this.state.user;
+        let lastItemState = this.state.items;
         if(lastUserState!==''){
             return;	
         }else{
@@ -43,6 +49,14 @@ class TodoContainer extends React.Component{
                         this.setState({
                             items:[...lastItemState,...mytodo],
                             isUpdating: false,
+                            originalitems: mytodo.length,
+                        })
+                    });
+                    TodoApi.onGetCompleted(res.data.response._id)
+                    .then((mytodo)=>{
+                        this.setState({
+                            completedCount: mytodo.length,
+                            isCounting: false,
                         })
                     });
                 }else{
@@ -50,8 +64,7 @@ class TodoContainer extends React.Component{
                 
                 }
             });
-        }
-           
+        }       
     }  
     onLogout(e){
         e.preventDefault();
@@ -61,12 +74,15 @@ class TodoContainer extends React.Component{
             this.context.router.push('/');  
         }).catch((err)=>{
           console.log(err);
-        });
-       
+        });  
     }
 
     handleSetStateItem(value){
         this.setState({items:value});
+    }
+
+    handleitems(){
+        this.setState({originalitems:this.state.originalitems + 1})
     }
 
     handleOnComplete(todo,index){
@@ -86,14 +102,72 @@ class TodoContainer extends React.Component{
                         completedCount: todo.isCompleted ? this.state.completedCount - 1 : this.state.completedCount + 1,
                         isEditing: false
                     });
-                    // toastr.success('Great! You just completed a todo');
                     return;
                 }
                 this.setState({isEditing:false});
-                // toastr.error(res.data.response);
             }).catch(err=>{
-                // toastr.error('Ooops! Try again');
+                console.log(err)
             });;
+    }
+    OnDelete(todo,index){
+        console.log(todo);
+        this.setState({isUpdating: true});
+        let lastItemState = this.state.items;
+        TodoApi.onDelete(todo._id).then(res=>{
+            if(res.data.success){
+                lastItemState.splice(index,1);
+                if(todo.isCompleted===true){
+                this.setState({
+                    items: [...lastItemState],
+                    isUpdating: false,
+                });
+                }else{
+                this.setState({
+                    items: [...lastItemState],
+                    isUpdating: false,
+                    originalitems: this.state.originalitems - 1
+                });
+                }
+                return;
+            }
+            this.setState({isUpdating: false});
+            alert(res.data.response);
+        });
+    }
+    todoOpen(){
+        this.setState({isUpdating:true});
+        this.context.router.push('/todo/open');
+        TodoApi.onGetOpen(this.state.user)
+        .then(mytodo=>{
+            this.setState({isUpdating:false});
+            this.setState({items: [...mytodo]});
+        }).catch(err=>{
+            console.log(err)
+        });
+    }
+
+    todoAll(){
+        this.setState({isUpdating:true});
+        this.context.router.push('/todo/all');
+        TodoApi.onGetTodo(this.state.user)
+        .then(mytodo=>{
+            this.setState({isUpdating:false});
+            this.setState({items: [...mytodo]});
+        }).catch(err=>{
+            console.log(err)
+        });
+    }
+
+    todoCompleted(){
+        this.setState({isUpdating:true});
+        this.context.router.push('/todo/completed');
+        TodoApi.onGetCompleted(this.state.user)
+        .then(mytodo=>{
+            this.setState({isUpdating:false});
+            this.setState({items: [...mytodo]});
+        }).catch(err=>{
+            console.log(err)
+        });
     }
 
     render(){
@@ -109,6 +183,14 @@ class TodoContainer extends React.Component{
                 todoItems={this.state.items}
                 onComplete={this.handleOnComplete}
                 onUpdate={this.state.isUpdating}
+                todoAll={this.todoAll}
+                todoOpen={this.todoOpen}
+                todoCompleted={this.todoCompleted}
+                OnDelete={this.OnDelete}
+                completedCount={this.state.completedCount}
+                originalitems={this.state.originalitems}
+                onCounting={this.state.isCounting}
+                setOriginalItems={this.handleitems}
             />
             </div>
         )

@@ -13265,9 +13265,39 @@ var TodoApi = {
     onGetTodo: function onGetTodo(id) {
         //[32312312]
         console.log(id);
-        return _axios2.default.get('/api/v1/Todo  ').then(function (mytodo) {
+        return _axios2.default.get('/api/v1/Todo').then(function (mytodo) {
             return mytodo.data.filter(function (todo) {
                 return todo.user === id;
+            });
+        });
+    },
+
+    getCountCompleted: function getCountCompleted(id) {
+        //[32312312]
+        console.log(id);
+        return _axios2.default.get('/api/v1/Todo').then(function (mytodo) {
+            return mytodo.data.filter(function (todo) {
+                return todo.user === id && todo.isCompleted === true;
+            });
+        });
+    },
+
+    onGetOpen: function onGetOpen(id) {
+        //[32312312]
+        console.log(id);
+        return _axios2.default.get('/api/v1/Todo').then(function (mytodo) {
+            return mytodo.data.filter(function (todo) {
+                return todo.isCompleted === false && todo.user === id;
+            });
+        });
+    },
+
+    onGetCompleted: function onGetCompleted(id) {
+        //[32312312]
+        console.log(id);
+        return _axios2.default.get('/api/v1/Todo').then(function (mytodo) {
+            return mytodo.data.filter(function (todo) {
+                return todo.isCompleted === true && todo.user === id;
             });
         });
     },
@@ -13276,6 +13306,15 @@ var TodoApi = {
         console.log(value);
         return _axios2.default.patch('/todo/' + id + '/' + field + '/' + value).then(function (res) {
             return res;
+        }).catch(function (err) {
+            throw err;
+        });
+    },
+
+    onDelete: function onDelete(id) {
+        console.log(id);
+        return _axios2.default.delete('/todo/' + id).then(function (todo) {
+            return todo;
         }).catch(function (err) {
             throw err;
         });
@@ -13323,6 +13362,14 @@ var ToDos = function ToDos(props) {
                         props.onComplete(props.item, props.index);
                     } },
                 '/'
+            ),
+            _react2.default.createElement(
+                'button',
+                { size: 'small', onClick: function onClick(e) {
+                        e.preventDefault();
+                        props.OnDelete(props.item, props.index);
+                    } },
+                'X'
             )
         )
     );
@@ -28127,7 +28174,8 @@ var routes = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: _App2.default },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _UserContainer2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'todo', component: _TodoContainer2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'todo', component: _TodoContainer2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'todo/:mode', component: _TodoContainer2.default })
     )
 );
 
@@ -28543,6 +28591,7 @@ var Todo = function (_React$Component) {
                 console.log(res.data.response);
                 if (res.data.success) {
                     _this2.props.setStateItem([].concat(_toConsumableArray(lastState), [Object.assign({}, res.data.response)]));
+                    _this2.props.setOriginalItems();
                     // alert("Todo added");
                     // this.setState({isLoadingItem:false});
                     return;
@@ -28575,9 +28624,40 @@ var Todo = function (_React$Component) {
                         null,
                         this.props.email
                     ),
+                    this.props.onCounting ? _react2.default.createElement(_loading2.default, { text: 'Loading', speed: 300 }) : _react2.default.createElement(
+                        'div',
+                        null,
+                        this.props.originalitems - this.props.completedCount === 1 ? _react2.default.createElement(
+                            'p',
+                            null,
+                            this.props.originalitems - this.props.completedCount,
+                            ' item left'
+                        ) : _react2.default.createElement(
+                            'p',
+                            null,
+                            this.props.originalitems - this.props.completedCount,
+                            ' items left'
+                        ),
+                        ' '
+                    ),
                     _react2.default.createElement(
                         'div',
                         { className: 'App-section' },
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.props.todoAll, size: 'small' },
+                            'All'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.props.todoOpen, size: 'small' },
+                            'Open'
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: this.props.todoCompleted, size: 'small' },
+                            'Completed'
+                        ),
                         _react2.default.createElement(
                             'form',
                             { onSubmit: this.onAddTodo },
@@ -28602,7 +28682,8 @@ var Todo = function (_React$Component) {
                                     return _react2.default.createElement(_ToDos2.default, { key: index,
                                         item: item,
                                         index: index,
-                                        onComplete: _this3.props.onComplete });
+                                        onComplete: _this3.props.onComplete,
+                                        OnDelete: _this3.props.OnDelete });
                                 })
                             )
                         )
@@ -28752,11 +28833,19 @@ var TodoContainer = function (_React$Component) {
             isLoading: true,
             items: [],
             isUpdating: true,
-            isEditing: true
+            isEditing: true,
+            isCounting: true,
+            completedCount: 0,
+            originalitems: 0
         };
         _this.onLogout = _this.onLogout.bind(_this);
         _this.handleSetStateItem = _this.handleSetStateItem.bind(_this);
         _this.handleOnComplete = _this.handleOnComplete.bind(_this);
+        _this.todoOpen = _this.todoOpen.bind(_this);
+        _this.todoAll = _this.todoAll.bind(_this);
+        _this.todoCompleted = _this.todoCompleted.bind(_this);
+        _this.OnDelete = _this.OnDelete.bind(_this);
+        _this.handleitems = _this.handleitems.bind(_this);
         return _this;
     }
 
@@ -28765,8 +28854,8 @@ var TodoContainer = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            var lastUserState = this.state.user; //get last state of user
-            var lastItemState = this.state.items; //get last state of items
+            var lastUserState = this.state.user;
+            var lastItemState = this.state.items;
             if (lastUserState !== '') {
                 return;
             } else {
@@ -28781,7 +28870,14 @@ var TodoContainer = function (_React$Component) {
                         _TodoApi2.default.onGetTodo(res.data.response._id).then(function (mytodo) {
                             _this2.setState({
                                 items: [].concat(_toConsumableArray(lastItemState), _toConsumableArray(mytodo)),
-                                isUpdating: false
+                                isUpdating: false,
+                                originalitems: mytodo.length
+                            });
+                        });
+                        _TodoApi2.default.onGetCompleted(res.data.response._id).then(function (mytodo) {
+                            _this2.setState({
+                                completedCount: mytodo.length,
+                                isCounting: false
                             });
                         });
                     } else {
@@ -28810,6 +28906,11 @@ var TodoContainer = function (_React$Component) {
             this.setState({ items: value });
         }
     }, {
+        key: 'handleitems',
+        value: function handleitems() {
+            this.setState({ originalitems: this.state.originalitems + 1 });
+        }
+    }, {
         key: 'handleOnComplete',
         value: function handleOnComplete(todo, index) {
             var _this4 = this;
@@ -28829,14 +28930,83 @@ var TodoContainer = function (_React$Component) {
                         completedCount: todo.isCompleted ? _this4.state.completedCount - 1 : _this4.state.completedCount + 1,
                         isEditing: false
                     });
-                    // toastr.success('Great! You just completed a todo');
                     return;
                 }
                 _this4.setState({ isEditing: false });
-                // toastr.error(res.data.response);
             }).catch(function (err) {
-                // toastr.error('Ooops! Try again');
+                console.log(err);
             });;
+        }
+    }, {
+        key: 'OnDelete',
+        value: function OnDelete(todo, index) {
+            var _this5 = this;
+
+            console.log(todo);
+            this.setState({ isUpdating: true });
+            var lastItemState = this.state.items;
+            _TodoApi2.default.onDelete(todo._id).then(function (res) {
+                if (res.data.success) {
+                    lastItemState.splice(index, 1);
+                    if (todo.isCompleted === true) {
+                        _this5.setState({
+                            items: [].concat(_toConsumableArray(lastItemState)),
+                            isUpdating: false
+                        });
+                    } else {
+                        _this5.setState({
+                            items: [].concat(_toConsumableArray(lastItemState)),
+                            isUpdating: false,
+                            originalitems: _this5.state.originalitems - 1
+                        });
+                    }
+                    return;
+                }
+                _this5.setState({ isUpdating: false });
+                alert(res.data.response);
+            });
+        }
+    }, {
+        key: 'todoOpen',
+        value: function todoOpen() {
+            var _this6 = this;
+
+            this.setState({ isUpdating: true });
+            this.context.router.push('/todo/open');
+            _TodoApi2.default.onGetOpen(this.state.user).then(function (mytodo) {
+                _this6.setState({ isUpdating: false });
+                _this6.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'todoAll',
+        value: function todoAll() {
+            var _this7 = this;
+
+            this.setState({ isUpdating: true });
+            this.context.router.push('/todo/all');
+            _TodoApi2.default.onGetTodo(this.state.user).then(function (mytodo) {
+                _this7.setState({ isUpdating: false });
+                _this7.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'todoCompleted',
+        value: function todoCompleted() {
+            var _this8 = this;
+
+            this.setState({ isUpdating: true });
+            this.context.router.push('/todo/completed');
+            _TodoApi2.default.onGetCompleted(this.state.user).then(function (mytodo) {
+                _this8.setState({ isUpdating: false });
+                _this8.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+            }).catch(function (err) {
+                console.log(err);
+            });
         }
     }, {
         key: 'render',
@@ -28853,7 +29023,15 @@ var TodoContainer = function (_React$Component) {
                     setStateItem: this.handleSetStateItem,
                     todoItems: this.state.items,
                     onComplete: this.handleOnComplete,
-                    onUpdate: this.state.isUpdating
+                    onUpdate: this.state.isUpdating,
+                    todoAll: this.todoAll,
+                    todoOpen: this.todoOpen,
+                    todoCompleted: this.todoCompleted,
+                    OnDelete: this.OnDelete,
+                    completedCount: this.state.completedCount,
+                    originalitems: this.state.originalitems,
+                    onCounting: this.state.isCounting,
+                    setOriginalItems: this.handleitems
                 })
             );
         }

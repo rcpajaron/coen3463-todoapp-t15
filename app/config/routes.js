@@ -9,6 +9,7 @@ var routes = (
         <Route path='/' component={App}>
             <IndexRoute component={UserContainer} />
             <Route path ='todo' component={TodoContainer} />
+            <Route path ='todo/:mode' component={TodoContainer} />
         </Route>
     </Router>
 )

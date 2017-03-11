@@ -88,4 +88,44 @@ router.patch('/:id/:field/:value', (req, res)=>{
     });
 });
 
+router.delete('/:id',(req,res)=>{
+    Todo.findById(req.params.id,(err,todo)=>{
+        if(err){
+           return res.json({
+                success: false,
+                title: 'Error',
+                response: 'Error occured'
+            });
+        }
+        if(!todo){
+            return res.json({
+                success: false,
+                title: 'Error',
+                response: 'Todo not found'
+            });
+        }
+        if(!req.user){
+            return res.json({
+               success:false,
+               title: 'Error',
+               response: 'Unauthorized' 
+            })
+        }
+        todo.remove((err,todo)=>{
+            if(err){
+                return res.json({
+                    success: false,
+                    title: 'Error',
+                    response: 'Error occured'
+                }); 
+            }
+            res.status(200).json({
+                success: true,
+                title: 'Success',
+                response: todo
+            });
+        });
+    });
+});
+
 module.exports = router;

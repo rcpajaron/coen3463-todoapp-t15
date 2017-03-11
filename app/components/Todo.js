@@ -51,6 +51,7 @@ class Todo extends React.Component{
             console.log(res.data.response);
             if(res.data.success){
                 this.props.setStateItem([...lastState,Object.assign({},res.data.response)]);
+                this.props.setOriginalItems();
                 // alert("Todo added");
                 // this.setState({isLoadingItem:false});
                 return;
@@ -62,18 +63,27 @@ class Todo extends React.Component{
             console.log(err);
         }); 
     }
+    
     render(){
     return(
         <div className="App-section">
                 
                 {this.props.isLoading? 
-                
                 <Loading text="Please Wait" speed={300}/>
                 :
                 <div>
                 <p>{this.props.name}</p>
                 <p>{this.props.email}</p>
+                {this.props.onCounting? <Loading text="Loading" speed={300}/>:
+                <div>{(this.props.originalitems - this.props.completedCount)=== 1?
+                <p>{this.props.originalitems - this.props.completedCount} item left</p>:
+                <p>{this.props.originalitems - this.props.completedCount} items left</p>
+                } </div>
+                }
                 <div className="App-section">
+                <button onClick={this.props.todoAll} size="small">All</button>
+                <button onClick={this.props.todoOpen} size="small">Open</button>
+                <button onClick={this.props.todoCompleted} size="small">Completed</button>
                 <form onSubmit={this.onAddTodo}>
                     <input placeholder="Add a To Do item." ref="todo"/>
                     <button type="submit" size="small">+</button>
@@ -88,7 +98,8 @@ class Todo extends React.Component{
                     <ToDos key={index}
                             item={item}
                             index={index}
-                            onComplete={this.props.onComplete}/>
+                            onComplete={this.props.onComplete}
+                            OnDelete={this.props.OnDelete}/>
                 )}
                 </ul>
                 </div>
