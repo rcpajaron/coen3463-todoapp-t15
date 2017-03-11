@@ -82,13 +82,15 @@ class Todo extends React.Component{
                 <div className="App-section">
                 {this.props.onUpdate? <Loading text="Loading" speed={300}/>:
                 <div>
+                <ul>
                 {this.props.items.map((item, index)=>
 
                     <ToDos key={index}
                             item={item}
                             index={index}
                             onComplete={this.props.onComplete}/>
-                )};
+                )}
+                </ul>
                 </div>
                 }
                 </div>

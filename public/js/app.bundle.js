@@ -13308,18 +13308,14 @@ var _loading2 = _interopRequireDefault(_loading);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ToDos = function ToDos(props) {
-
     return _react2.default.createElement(
-        'div',
-        { className: 'App-section' },
+        'li',
+        null,
+        ' ',
         _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-                'p',
-                { style: { textDecoration: props.item.isCompleted ? 'line-through' : 'none' } },
-                props.item.name
-            ),
+            'p',
+            { style: { textDecoration: props.item.isCompleted ? 'line-through' : 'none' } },
+            props.item.name,
             _react2.default.createElement(
                 'button',
                 { onClick: function onClick(e) {
@@ -13331,7 +13327,6 @@ var ToDos = function ToDos(props) {
         )
     );
 };
-
 ToDos.propTypes = {
     item: _react.PropTypes.object.isRequired
 
@@ -28600,13 +28595,16 @@ var Todo = function (_React$Component) {
                         this.props.onUpdate ? _react2.default.createElement(_loading2.default, { text: 'Loading', speed: 300 }) : _react2.default.createElement(
                             'div',
                             null,
-                            this.props.items.map(function (item, index) {
-                                return _react2.default.createElement(_ToDos2.default, { key: index,
-                                    item: item,
-                                    index: index,
-                                    onComplete: _this3.props.onComplete });
-                            }),
-                            ';'
+                            _react2.default.createElement(
+                                'ul',
+                                null,
+                                this.props.items.map(function (item, index) {
+                                    return _react2.default.createElement(_ToDos2.default, { key: index,
+                                        item: item,
+                                        index: index,
+                                        onComplete: _this3.props.onComplete });
+                                })
+                            )
                         )
                     ),
                     _react2.default.createElement('br', null),
