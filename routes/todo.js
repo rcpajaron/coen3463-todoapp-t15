@@ -128,4 +128,43 @@ router.delete('/:id',(req,res)=>{
     });
 });
 
+router.delete('/delAllComplete/:id', (req,res)=>{
+    console.log("here");
+    Todo.find((err,mytodo)=>{
+        if(err){
+            return res.json({
+                success:false,
+                response: 'Error occured'
+            });
+        }
+        if(!req.user){
+            return res.json({
+                success:false,
+                response: 'Unauthorized'
+            });
+        }
+        mytodo.map((todo, index)=>{
+            if(todo.user.toString()===req.params.id && todo.isCompleted === true){
+                todo.remove(err=>{
+                    if(err){
+                        return res.json({
+                            success:false,
+                            response: 'Error occured'
+                        });
+                    }
+                    if(!req.user){
+                        return res.json({
+                            success:false,
+                            response: 'Unauthorized'
+                        });
+                    }
+                });
+            }
+        });
+        res.json({
+            success:true
+        });
+    });
+});
+
 module.exports = router;

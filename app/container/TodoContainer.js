@@ -28,6 +28,7 @@ class TodoContainer extends React.Component{
         this.todoCompleted = this.todoCompleted.bind(this);
         this.OnDelete = this.OnDelete.bind(this);
         this.handleitems = this.handleitems.bind(this);
+        this.DelAllComplete = this.DelAllComplete.bind(this);
     }
 
     componentDidMount(){
@@ -134,13 +135,33 @@ class TodoContainer extends React.Component{
             alert(res.data.response);
         });
     }
+    DelAllComplete(){
+        this.setState({isUpdating:true});
+        TodoApi.onDelAllComplete(this.state.user)
+        .then(res=>{
+            if(res.data.success){
+                console.log("success deleting all completed todo")
+                this.context.router.push('/todo');
+            }
+        });
+        TodoApi.onGetTodo(this.state.user)
+        .then(mytodo=>{
+            this.setState({isUpdating:false,
+                        items: [...mytodo]});
+        })
+        .catch(err=>{
+             console.log("try again")
+        });
+        
+    }
+
     todoOpen(){
         this.setState({isUpdating:true});
         this.context.router.push('/todo/open');
         TodoApi.onGetOpen(this.state.user)
         .then(mytodo=>{
-            this.setState({isUpdating:false});
-            this.setState({items: [...mytodo]});
+            this.setState({isUpdating:false,
+                        items: [...mytodo]});
         }).catch(err=>{
             console.log(err)
         });
@@ -151,8 +172,8 @@ class TodoContainer extends React.Component{
         this.context.router.push('/todo/all');
         TodoApi.onGetTodo(this.state.user)
         .then(mytodo=>{
-            this.setState({isUpdating:false});
-            this.setState({items: [...mytodo]});
+            this.setState({isUpdating:false,
+                        items: [...mytodo]});
         }).catch(err=>{
             console.log(err)
         });
@@ -163,8 +184,8 @@ class TodoContainer extends React.Component{
         this.context.router.push('/todo/completed');
         TodoApi.onGetCompleted(this.state.user)
         .then(mytodo=>{
-            this.setState({isUpdating:false});
-            this.setState({items: [...mytodo]});
+            this.setState({isUpdating:false,
+                        items: [...mytodo]});
         }).catch(err=>{
             console.log(err)
         });
@@ -191,6 +212,7 @@ class TodoContainer extends React.Component{
                 originalitems={this.state.originalitems}
                 onCounting={this.state.isCounting}
                 setOriginalItems={this.handleitems}
+                DelAllComplete={this.DelAllComplete}
             />
             </div>
         )

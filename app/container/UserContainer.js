@@ -20,9 +20,19 @@ class UserContainer extends React.Component{
       });}
     }
 
+    handleLogin(){
+      this.context.router.push('/login');
+    }
+    handleRegister(){
+      this.context.router.push('/register');
+    }
+
     render(){
         return(
-            <User login={this.state.login} switch={this.switch}/>
+            <User login={this.state.login} switch={this.switch}
+            handleLogin={this.handleLogin}
+            handleRegister={this.handleRegister
+            }/>
         )
     }
 }

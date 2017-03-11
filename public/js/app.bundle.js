@@ -13318,6 +13318,14 @@ var TodoApi = {
         }).catch(function (err) {
             throw err;
         });
+    },
+
+    onDelAllComplete: function onDelAllComplete(id) {
+        return _axios2.default.delete('/todo/delAllComplete/' + id).then(function (res) {
+            return res;
+        }).catch(function (err) {
+            throw err;
+        });
     }
 };
 
@@ -28175,6 +28183,8 @@ var routes = _react2.default.createElement(
         { path: '/', component: _App2.default },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _UserContainer2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'todo', component: _TodoContainer2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _UserContainer2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _UserContainer2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'todo/:mode', component: _TodoContainer2.default })
     )
 );
@@ -28659,6 +28669,11 @@ var Todo = function (_React$Component) {
                             'Completed'
                         ),
                         _react2.default.createElement(
+                            'button',
+                            { onClick: this.props.DelAllComplete, size: 'small' },
+                            'Clear Completed'
+                        ),
+                        _react2.default.createElement(
                             'form',
                             { onSubmit: this.onAddTodo },
                             _react2.default.createElement('input', { placeholder: 'Add a To Do item.', ref: 'todo' }),
@@ -28742,7 +28757,7 @@ function User(props) {
         null,
         props.login ? _react2.default.createElement(
             'div',
-            { className: 'App-section' },
+            { className: 'App-section', onActive: props.handleLogin },
             _react2.default.createElement(_Login2.default, null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -28752,7 +28767,7 @@ function User(props) {
             )
         ) : _react2.default.createElement(
             'div',
-            { className: 'App-section' },
+            { className: 'App-section', onActive: props.handleRegister },
             _react2.default.createElement(_Register2.default, null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -28766,7 +28781,9 @@ function User(props) {
 
 User.PropTypes = {
     login: _react.PropTypes.bool.isRequired,
-    switch: _react.PropTypes.func.isRequired
+    switch: _react.PropTypes.func.isRequired,
+    handleRegister: _react.PropTypes.func.isRequired,
+    handleLogin: _react.PropTypes.func.isRequired
 };
 
 exports.default = User;
@@ -28846,6 +28863,7 @@ var TodoContainer = function (_React$Component) {
         _this.todoCompleted = _this.todoCompleted.bind(_this);
         _this.OnDelete = _this.OnDelete.bind(_this);
         _this.handleitems = _this.handleitems.bind(_this);
+        _this.DelAllComplete = _this.DelAllComplete.bind(_this);
         return _this;
     }
 
@@ -28967,15 +28985,34 @@ var TodoContainer = function (_React$Component) {
             });
         }
     }, {
+        key: 'DelAllComplete',
+        value: function DelAllComplete() {
+            var _this6 = this;
+
+            this.setState({ isUpdating: true });
+            _TodoApi2.default.onDelAllComplete(this.state.user).then(function (res) {
+                if (res.data.success) {
+                    console.log("success deleting all completed todo");
+                    _this6.context.router.push('/todo');
+                }
+            });
+            _TodoApi2.default.onGetTodo(this.state.user).then(function (mytodo) {
+                _this6.setState({ isUpdating: false,
+                    items: [].concat(_toConsumableArray(mytodo)) });
+            }).catch(function (err) {
+                console.log("try again");
+            });
+        }
+    }, {
         key: 'todoOpen',
         value: function todoOpen() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.setState({ isUpdating: true });
             this.context.router.push('/todo/open');
             _TodoApi2.default.onGetOpen(this.state.user).then(function (mytodo) {
-                _this6.setState({ isUpdating: false });
-                _this6.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+                _this7.setState({ isUpdating: false,
+                    items: [].concat(_toConsumableArray(mytodo)) });
             }).catch(function (err) {
                 console.log(err);
             });
@@ -28983,13 +29020,13 @@ var TodoContainer = function (_React$Component) {
     }, {
         key: 'todoAll',
         value: function todoAll() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.setState({ isUpdating: true });
             this.context.router.push('/todo/all');
             _TodoApi2.default.onGetTodo(this.state.user).then(function (mytodo) {
-                _this7.setState({ isUpdating: false });
-                _this7.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+                _this8.setState({ isUpdating: false,
+                    items: [].concat(_toConsumableArray(mytodo)) });
             }).catch(function (err) {
                 console.log(err);
             });
@@ -28997,13 +29034,13 @@ var TodoContainer = function (_React$Component) {
     }, {
         key: 'todoCompleted',
         value: function todoCompleted() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({ isUpdating: true });
             this.context.router.push('/todo/completed');
             _TodoApi2.default.onGetCompleted(this.state.user).then(function (mytodo) {
-                _this8.setState({ isUpdating: false });
-                _this8.setState({ items: [].concat(_toConsumableArray(mytodo)) });
+                _this9.setState({ isUpdating: false,
+                    items: [].concat(_toConsumableArray(mytodo)) });
             }).catch(function (err) {
                 console.log(err);
             });
@@ -29031,7 +29068,8 @@ var TodoContainer = function (_React$Component) {
                     completedCount: this.state.completedCount,
                     originalitems: this.state.originalitems,
                     onCounting: this.state.isCounting,
-                    setOriginalItems: this.handleitems
+                    setOriginalItems: this.handleitems,
+                    DelAllComplete: this.DelAllComplete
                 })
             );
         }
@@ -29104,9 +29142,21 @@ var UserContainer = function (_React$Component) {
             }
         }
     }, {
+        key: 'handleLogin',
+        value: function handleLogin() {
+            this.context.router.push('/login');
+        }
+    }, {
+        key: 'handleRegister',
+        value: function handleRegister() {
+            this.context.router.push('/register');
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_User2.default, { login: this.state.login, 'switch': this.switch });
+            return _react2.default.createElement(_User2.default, { login: this.state.login, 'switch': this.switch,
+                handleLogin: this.handleLogin,
+                handleRegister: this.handleRegister });
         }
     }]);
 

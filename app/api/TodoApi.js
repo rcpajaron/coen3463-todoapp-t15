@@ -59,6 +59,15 @@ var TodoApi = {
                 throw(err);
             });
     },
+
+    onDelAllComplete: id=>{
+        return axios.delete('/todo/delAllComplete/'+id)
+            .then(res=>{
+                return res;
+            }).catch(err=>{
+                throw(err);
+            });
+    },
 }
 
 export default TodoApi;

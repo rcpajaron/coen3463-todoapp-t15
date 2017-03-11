@@ -84,6 +84,7 @@ class Todo extends React.Component{
                 <button onClick={this.props.todoAll} size="small">All</button>
                 <button onClick={this.props.todoOpen} size="small">Open</button>
                 <button onClick={this.props.todoCompleted} size="small">Completed</button>
+                <button onClick={this.props.DelAllComplete}size="small">Clear Completed</button>
                 <form onSubmit={this.onAddTodo}>
                     <input placeholder="Add a To Do item." ref="todo"/>
                     <button type="submit" size="small">+</button>
