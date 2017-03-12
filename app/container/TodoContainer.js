@@ -141,13 +141,13 @@ class TodoContainer extends React.Component{
         .then(res=>{
             if(res.data.success){
                 console.log("success deleting all completed todo")
-                this.context.router.push('/todo');
             }
-        });
-        TodoApi.onGetTodo(this.state.user)
-        .then(mytodo=>{
+            TodoApi.onGetTodo(this.state.user)
+            .then(mytodo=>{
+            console.log(mytodo)
             this.setState({isUpdating:false,
                         items: [...mytodo]});
+            });
         })
         .catch(err=>{
              console.log("try again")

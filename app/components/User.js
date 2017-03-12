@@ -9,12 +9,12 @@ function User(props){
     return(
         <div>
             {props.login?
-                <div className="App-section" onActive={props.handleLogin}>
+                <div className="App-section" onFocus={props.handleLogin}>
                     <Login/>   
                     <br/>
                     <button onClick={props.switch} value="RegForm">Register</button> 
                 </div>:
-                <div className="App-section" onActive={props.handleRegister}>                  
+                <div className="App-section" onFocus={props.handleRegister}>                  
                     <Register />
                     <br/>
                     <button onClick={props.switch} value="LoginForm">Back</button>

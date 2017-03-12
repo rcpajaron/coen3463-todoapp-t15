@@ -28757,7 +28757,7 @@ function User(props) {
         null,
         props.login ? _react2.default.createElement(
             'div',
-            { className: 'App-section', onActive: props.handleLogin },
+            { className: 'App-section', onFocus: props.handleLogin },
             _react2.default.createElement(_Login2.default, null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -28767,7 +28767,7 @@ function User(props) {
             )
         ) : _react2.default.createElement(
             'div',
-            { className: 'App-section', onActive: props.handleRegister },
+            { className: 'App-section', onFocus: props.handleRegister },
             _react2.default.createElement(_Register2.default, null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -28993,12 +28993,12 @@ var TodoContainer = function (_React$Component) {
             _TodoApi2.default.onDelAllComplete(this.state.user).then(function (res) {
                 if (res.data.success) {
                     console.log("success deleting all completed todo");
-                    _this6.context.router.push('/todo');
                 }
-            });
-            _TodoApi2.default.onGetTodo(this.state.user).then(function (mytodo) {
-                _this6.setState({ isUpdating: false,
-                    items: [].concat(_toConsumableArray(mytodo)) });
+                _TodoApi2.default.onGetTodo(_this6.state.user).then(function (mytodo) {
+                    console.log(mytodo);
+                    _this6.setState({ isUpdating: false,
+                        items: [].concat(_toConsumableArray(mytodo)) });
+                });
             }).catch(function (err) {
                 console.log("try again");
             });
