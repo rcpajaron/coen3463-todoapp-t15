@@ -29,12 +29,12 @@ class UserContainer extends React.Component{
     });
     }
 
-    // handleLogin(){
-    //   this.context.router.push('/login');
-    // }
-    // handleRegister(){
-    //   this.context.router.push('/register');
-    // }
+      // handleLogin(){
+      //   this.context.router.push('login');
+      // }
+      // handleRegister(){
+      //   this.context.router.push('register');
+      // }
 
     render(){
         return(

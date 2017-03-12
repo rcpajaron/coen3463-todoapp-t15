@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './App.css';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
 
 class Login extends Component {
     constructor(props,context) {
@@ -52,11 +52,13 @@ class Login extends Component {
       <Form>
         <Form.Field>
           <label>Username</label>
-          <input type="text" placeholder="" ref="username"/>
+          <Input>
+          <input type="text" placeholder="" size="tiny" ref="username"/></Input>
         </Form.Field>
         <Form.Field>
           <label>Password</label>
-          <input type="password" placeholder="" ref="password"/>
+          <Input>
+          <input type="password" placeholder="" ref="password"/></Input>
         </Form.Field>
         <Button onClick={this.onLogin} value="Login">Login</Button>
     </Form>

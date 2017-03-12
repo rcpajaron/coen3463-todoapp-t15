@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -72,23 +72,33 @@ class Register extends Component {
           <p>{this.state.error}</p>
         <Form.Field>
           <label>Username</label>
+          <Input>
           <input type="text" placeholder="" ref="username" required={true}/>
+          </Input>
         </Form.Field>
         <Form.Field>
           <label>Password</label>
+          <Input>
           <input type="password" placeholder="" ref="password" required={true}/>
+          </Input>
         </Form.Field>
         <Form.Field>
           <label>First Name</label>
-          <input type="password" placeholder="" ref="first_name" required={true}/>
+          <Input>
+          <input type="text" placeholder="" ref="first_name" required={true}/>
+          </Input>
         </Form.Field>
         <Form.Field>
           <label>Last Name</label>
-          <input type="password" placeholder="" ref="last_name" required={true}/>
+          <Input>
+          <input type="text" placeholder="" ref="last_name" required={true}/>
+          </Input>
         </Form.Field>
         <Form.Field>
           <label>Email</label>
-          <input type="password" placeholder="" ref="email" onKeyPress={this.onEmail} required={true}/>
+          <Input>
+          <input type="text" placeholder="" ref="email" onKeyPress={this.onEmail} required={true}/>
+          </Input>
         </Form.Field>
         <Button onClick={this.onRegister} value="Register">Register</Button>
       </Form>

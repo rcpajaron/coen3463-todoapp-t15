@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
+import { Dimmer, Loader, Image, Segment, Message, Icon } from 'semantic-ui-react'
 
 var styles = {
 	container:{
@@ -18,7 +19,7 @@ var styles = {
 	}
 };
 
-var Loading = React.createClass({
+var loadingimage = React.createClass({
 	propTypes: {
 		text: PropTypes.string,
 		speed:PropTypes.number
@@ -52,54 +53,37 @@ var Loading = React.createClass({
 	componentWillUnmount: function () {
 		clearInterval(this.interval);
 	},	
+	// render: function() {
+	// 	return (
+	// 		<div>
+	// 			<Segment>
+	// 		      <Dimmer active inverted>
+	// 		        <Loader inverted>{this.state.text}</Loader>
+	// 		      </Dimmer>
+	// 		      <br/>
+	// 		      <br/>
+	// 		      <br/>
+	// 		      <br/>
+	// 		      <br/>
+	// 		      <br/>
+	// 		      <br/>
+	// 		    </Segment>
+	// 		</div>	
+	// 	);
+	// }
 	render: function() {
 		return (
-			<div>
-				<p >{this.state.text}</p>
-			</div>	
+			<Message icon>
+			    <Icon name='circle notched' loading />
+			    <Message.Content>
+			      <Message.Header>{this.state.text}</Message.Header>
+			      We are fetching that content for you.
+			    </Message.Content>
+			 </Message>
 		);
 	}
 
 });
 
-module.exports = Loading;
+module.exports = loadingimage;
 
-
-
-// var PropTypes = React.PropTypes;
-// var styls = require('../styles');
-// var ReactRouter = require('react-router');
-// var Link = ReactRouter.Link
-// var UserDetails = require('./UserDetails');
-// var UserDetailsWrapper = require(./UserDetailsWrapper);
-// var MainContainer = require(./MainContainer);
-
-// function StartOver () {
-// 	return (
-// 		<div className='col-sm-12' style={styles.space}>
-// 			<Link to='/playerOne'>
-// 				<button type='button' className='btn btn-lg btn-danger'>Start Over</button>
-// 			</Link>
-// 		</div>	
-// 	)
-// }
-
-// function Tie (props) {
-// 	return (
-// 		<MainContainer>
-// 			<h1>It's a Tie!</h1>
-// 			<StartOver />
-// 		</MainContainer	
-// 	)
-// }
-// function Results (props) {
-// 	if (props.isLoading === true) {
-// 		return<p> Loading </p>			
-// 	}
-// 	if (props.scores[0] === props.scores[1]) {
-// 		return (
-// 			<Tie scores={props.scores} playersInfo={props.playersInfo}/>
-// 		)
-// 	}
-// 	var winningIndex = 
-// }
