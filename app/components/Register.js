@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -13,38 +14,6 @@ class Register extends Component {
     this.onRegister = this.onRegister.bind(this)
     this.onEmail = this.onEmail.bind(this)
   }
-
-  
-  // register(){
-  //       const registerAPI = '/auth/register';
-  //       var body = {username: this.refs.username.value,
-  //                   password: this.refs.password.value,
-  //                   first_name: this.refs.first_name.value,
-  //                   last_name: this.refs.last_name.value,
-  //                   email: this.refs.email.value,
-  //                   }
-  //       // call api, make sure to include api key in headers
-  //       fetch(registerAPI, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Accept': 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify(body)
-  //       }).then((response) => {
-  //           response.json().then((data) => {
-  //           // set state based on decoded data
-  //           // console.log(data.error)
-  //           this.setState({
-  //             username:data.message.username
-  //           }).bind(this);
-  //         })
-  //         // console.log(response)
-  //         // decode response to json
-  //       }).catch((err)=>{
-  //           console.log(err)
-  //       });
-  // }
 
   onEmail(e){
     var regex= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -62,11 +31,10 @@ class Register extends Component {
 
   onRegister(e){
         e.preventDefault();
-        // let elements = e.target.elements;
-        // if(elements[3].value>6){
-        //     alert("Your password must be at least 6 characters long. Please try another.");
-        //     return;
-        // }
+        if(this.refs.password.value>6){
+            alert("Your password must be at least 6 characters long. Please try another.");
+            return;
+        }
         let data={
             username: this.refs.username.value,
             password: this.refs.password.value,
@@ -99,32 +67,31 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="counter">
+      <Form>
           <p>{this.state.emailerror}</p>
           <p>{this.state.error}</p>
-          <label>username</label>
-          <input type="text" placeholder="" ref="username">
-          </input>
-          <br/>
-          <label>password</label>
-          <input type="password" placeholder="" ref="password"> 
-          </input>
-          <br/>
-          <label>First name</label>
-          <input type="text" placeholder="" ref="first_name"> 
-          </input>
-          <br/>
-          <label>Last name</label>
-          <input type="text" placeholder="" ref="last_name"> 
-          </input>
-          <br/>
+        <Form.Field>
+          <label>Username</label>
+          <input type="text" placeholder="" ref="username" required={true}/>
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input type="password" placeholder="" ref="password" required={true}/>
+        </Form.Field>
+        <Form.Field>
+          <label>First Name</label>
+          <input type="password" placeholder="" ref="first_name" required={true}/>
+        </Form.Field>
+        <Form.Field>
+          <label>Last Name</label>
+          <input type="password" placeholder="" ref="last_name" required={true}/>
+        </Form.Field>
+        <Form.Field>
           <label>Email</label>
-          <input type="text" placeholder="" ref="email" onKeyPress={this.onEmail} > 
-          </input>
-          <br/>
-          <button onClick={this.onRegister} value="Register">Register</button>
-
-      </div>
+          <input type="password" placeholder="" ref="email" onKeyPress={this.onEmail} required={true}/>
+        </Form.Field>
+        <Button onClick={this.onRegister} value="Register">Register</Button>
+      </Form>
     )
   }
 }

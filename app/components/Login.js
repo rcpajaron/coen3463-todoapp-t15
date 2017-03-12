@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './App.css';
 import AuthApi from '../api/AuthApi';
+import { Button, Checkbox, Form } from 'semantic-ui-react';
 
 class Login extends Component {
     constructor(props,context) {
@@ -48,21 +49,17 @@ class Login extends Component {
     
     render(){
     return (
-      <div className="counter">
-          {this.state.error}
-          <br/>
-          <label>username</label>
-          <input type="text" placeholder="" ref="username">
-          </input>
-          <br/>
-          <label>password</label>
-          <input type="password" placeholder="" ref="password"> 
-          </input>
-          <br/>
-          <button onClick={this.onLogin} value="Login">Login</button>
-          
-          
-      </div>
+      <Form>
+        <Form.Field>
+          <label>Username</label>
+          <input type="text" placeholder="" ref="username"/>
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input type="password" placeholder="" ref="password"/>
+        </Form.Field>
+        <Button onClick={this.onLogin} value="Login">Login</Button>
+    </Form>
     )
   }
 }
