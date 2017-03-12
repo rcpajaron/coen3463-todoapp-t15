@@ -29106,6 +29106,10 @@ var _User = __webpack_require__(237);
 
 var _User2 = _interopRequireDefault(_User);
 
+var _AuthApi = __webpack_require__(45);
+
+var _AuthApi2 = _interopRequireDefault(_AuthApi);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29140,6 +29144,17 @@ var UserContainer = function (_React$Component) {
                     login: true
                 });
             }
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            _AuthApi2.default.onGetUser().then(function (res) {
+                if (res.data.response) {
+                    _this2.context.router.push('/todo');
+                }
+            });
         }
     }, {
         key: 'handleLogin',

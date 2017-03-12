@@ -1,5 +1,6 @@
 import React from 'react';
 import User from '../components/User';
+import AuthApi from '../api/AuthApi'; 
 
 class UserContainer extends React.Component{
     constructor(props,context){
@@ -18,6 +19,14 @@ class UserContainer extends React.Component{
       this.setState({
         login: true
       });}
+    }
+
+    componentWillMount(){
+      AuthApi.onGetUser().then((res)=>{
+        if(res.data.response){
+            this.context.router.push('/todo');
+          }
+    });
     }
 
     handleLogin(){
