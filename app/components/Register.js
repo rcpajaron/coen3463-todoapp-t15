@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input, Label } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Register extends Component {
     this.state={
       username: "",
       error: "",
-      emailerror:"",
+      emailerror:false,
       isLoading: false
     }
     this.onRegister = this.onRegister.bind(this)
@@ -19,11 +19,11 @@ class Register extends Component {
     var regex= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(regex.test(this.refs.email.value,) ===false){
         this.setState({
-          emailerror: "Invalid Email"
+          emailerror: true
         })
     }else{
         this.setState({
-          emailerror: "Email is OK!"
+          emailerror: false
         })
         
     }
@@ -68,8 +68,7 @@ class Register extends Component {
   render() {
     return (
       <Form>
-          <p>{this.state.emailerror}</p>
-          <p>{this.state.error}</p>
+        <p>{this.state.error}</p>
         <Form.Field>
           <label>Username</label>
           <Input>
@@ -99,6 +98,9 @@ class Register extends Component {
           <Input>
           <input type="text" placeholder="" ref="email" onKeyPress={this.onEmail} required={true}/>
           </Input>
+          {this.state.emailerror?<Label basic color='red' pointing>Invalid Format of Email</Label>:
+          <p></p>}
+          
         </Form.Field>
         <Button onClick={this.onRegister} value="Register">Register</Button>
       </Form>
