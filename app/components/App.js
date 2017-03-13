@@ -9,11 +9,6 @@ class App extends React.Component{
     render(){
         return(
             <div className="App-section">
-                <div className="App-header">
-                    <p>Hello todo!</p>
-                    
-                </div>
-
                 {this.props.children}
             </div>
         );

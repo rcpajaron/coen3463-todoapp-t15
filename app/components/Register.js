@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form, Input, Label } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input, Label, Message } from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -8,11 +8,14 @@ class Register extends Component {
     this.state={
       username: "",
       error: "",
+      title: "",
       emailerror:false,
-      isLoading: false
+      nameError:false,
+      isLoading: false,
     }
-    this.onRegister = this.onRegister.bind(this)
-    this.onEmail = this.onEmail.bind(this)
+    this.onRegister = this.onRegister.bind(this);
+    this.onEmail = this.onEmail.bind(this);
+    this.onUsername = this.onUsername.bind(this);
   }
 
   onEmail(e){
@@ -24,6 +27,19 @@ class Register extends Component {
     }else{
         this.setState({
           emailerror: false
+        })
+        
+    }
+  }
+  onUsername(e){
+    var regex= /^([a-zA-z]{7,})$/;
+    if(regex.test(this.refs.username.value,) ===false){
+        this.setState({
+          nameError: true
+        })
+    }else{
+        this.setState({
+          nameError: false
         })
         
     }
@@ -55,7 +71,8 @@ class Register extends Component {
               return;
             }else{
               this.setState({
-                error: data.response.message
+                error: data.response.message,
+                title: data.title,
               });
               console.log(data);
               console.log("Register Failed!");
@@ -68,12 +85,18 @@ class Register extends Component {
   render() {
     return (
       <Form>
-        <p>{this.state.error}</p>
+        {this.state.error?
+        <Message negative>
+          <Message.Header>{this.state.title}</Message.Header>
+          <p>{this.state.error}</p>
+        </Message>:<p/>}
         <Form.Field>
           <label>Username</label>
           <Input>
-          <input type="text" placeholder="" ref="username" required={true}/>
+          <input type="text" placeholder="" ref="username" onKeyPress={this.onUsername} required={true}/>
           </Input>
+          {this.state.nameError?<Label basic color='red' pointing>Your username must be atleast 8 alphacharacters.</Label>:
+          <p></p>}
         </Form.Field>
         <Form.Field>
           <label>Password</label>

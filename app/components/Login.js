@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './App.css';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input, Message } from 'semantic-ui-react';
 
 class Login extends Component {
     constructor(props,context) {
@@ -10,6 +10,7 @@ class Login extends Component {
           username: "",
           user:"",
           error: "",
+          title: "",
         }
         this.onLogin = this.onLogin.bind(this)
         
@@ -30,17 +31,16 @@ class Login extends Component {
                 username: data.response.username,
               });
               this.context.router.push('/todo');
-              // window.location = data.redirect;
+              // window.location = '/todo';
               console.log(data);
               return;
             }else{
               this.setState({
-                error: data.response
+                error: data.response,
+                title: data.title,
               });
               console.log(data);
               console.log("Login Failed!");}
-            
-            
         }).catch((err)=>{
           console.log(err);
         });
@@ -50,6 +50,12 @@ class Login extends Component {
     render(){
     return (
       <Form>
+      {this.state.error?
+      <Message negative>
+        <Message.Header>{this.state.title}</Message.Header>
+        <p>{this.state.error}</p>
+      </Message>:<p/>}
+      
         <Form.Field>
           <label>Username</label>
           <Input>

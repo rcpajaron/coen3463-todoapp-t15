@@ -20,7 +20,7 @@ router.route('/register')
         console.log(err)
         return res.send({
         success: false,
-        title: 'ERROR',
+        title: 'Error',
         response: err
         }); 
       }

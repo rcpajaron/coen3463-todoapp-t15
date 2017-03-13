@@ -49,7 +49,10 @@ class Todo extends React.Component{
     render(){
     return(
         <div className="App-section">
-                
+                <div className="App-header">
+                    <p style={{textAlign:'center'}}>To Do App!</p>
+                    
+                </div>
                 {this.props.isLoading? 
                 <Loading text="Please Wait" speed={300}/>
                 :
@@ -77,8 +80,8 @@ class Todo extends React.Component{
                     <div className="App-section">
                     {this.props.onUpdate? <Loading text="Just one second" speed={300}/>:
                     <div>{(this.props.originalitems - this.props.completedCount)=== 1?
-                    <p>{this.props.originalitems - this.props.completedCount} item left</p>:
-                    <p>{this.props.originalitems - this.props.completedCount} items left</p>
+                    <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} item left</p>:
+                    <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} items left</p>
                     } 
                         {this.props.onUpdate? <Loading text="Loading" speed={300}/>:
                         <div>

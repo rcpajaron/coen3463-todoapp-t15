@@ -22,6 +22,7 @@ class User extends Component {
     render(){
     return(
         <Container text>
+        <br/>
             <Menu attached='top' tabular>
           <Menu.Item name='login' active={this.props.mode === 'login'} onClick={this.props.handleLogin}  />
           <Menu.Item name='register' active={this.props.mode === 'register'} onClick={this.props.handleRegister} />

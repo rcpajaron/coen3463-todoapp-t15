@@ -21598,15 +21598,6 @@ var App = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'App-section' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'App-header' },
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        'Hello todo!'
-                    )
-                ),
                 this.props.children
             );
         }
@@ -21765,8 +21756,7 @@ var ToDos = function ToDos(props) {
             _semanticUiReact.Message,
             {
                 negative: props.item.isCompleted ? true : false,
-                info: props.item.isCompleted ? false : true
-            },
+                info: props.item.isCompleted ? false : true },
             _react2.default.createElement(
                 _semanticUiReact.List.Item,
                 null,
@@ -46813,7 +46803,8 @@ var Login = function (_Component) {
     _this.state = {
       username: "",
       user: "",
-      error: ""
+      error: "",
+      title: ""
     };
     _this.onLogin = _this.onLogin.bind(_this);
 
@@ -46839,12 +46830,13 @@ var Login = function (_Component) {
             username: data.response.username
           });
           _this2.context.router.push('/todo');
-          // window.location = data.redirect;
+          // window.location = '/todo';
           console.log(data);
           return;
         } else {
           _this2.setState({
-            error: data.response
+            error: data.response,
+            title: data.title
           });
           console.log(data);
           console.log("Login Failed!");
@@ -46859,6 +46851,20 @@ var Login = function (_Component) {
       return _react2.default.createElement(
         _semanticUiReact.Form,
         null,
+        this.state.error ? _react2.default.createElement(
+          _semanticUiReact.Message,
+          { negative: true },
+          _react2.default.createElement(
+            _semanticUiReact.Message.Header,
+            null,
+            this.state.title
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.state.error
+          )
+        ) : _react2.default.createElement('p', null),
         _react2.default.createElement(
           _semanticUiReact.Form.Field,
           null,
@@ -46946,11 +46952,14 @@ var Register = function (_Component) {
     _this.state = {
       username: "",
       error: "",
+      title: "",
       emailerror: false,
+      nameError: false,
       isLoading: false
     };
     _this.onRegister = _this.onRegister.bind(_this);
     _this.onEmail = _this.onEmail.bind(_this);
+    _this.onUsername = _this.onUsername.bind(_this);
     return _this;
   }
 
@@ -46965,6 +46974,20 @@ var Register = function (_Component) {
       } else {
         this.setState({
           emailerror: false
+        });
+      }
+    }
+  }, {
+    key: 'onUsername',
+    value: function onUsername(e) {
+      var regex = /^([a-zA-z]{7,})$/;
+      if (regex.test(this.refs.username.value) === false) {
+        this.setState({
+          nameError: true
+        });
+      } else {
+        this.setState({
+          nameError: false
         });
       }
     }
@@ -46998,7 +47021,8 @@ var Register = function (_Component) {
           return;
         } else {
           _this2.setState({
-            error: data.response.message
+            error: data.response.message,
+            title: data.title
           });
           console.log(data);
           console.log("Register Failed!");
@@ -47013,11 +47037,20 @@ var Register = function (_Component) {
       return _react2.default.createElement(
         _semanticUiReact.Form,
         null,
-        _react2.default.createElement(
-          'p',
-          null,
-          this.state.error
-        ),
+        this.state.error ? _react2.default.createElement(
+          _semanticUiReact.Message,
+          { negative: true },
+          _react2.default.createElement(
+            _semanticUiReact.Message.Header,
+            null,
+            this.state.title
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.state.error
+          )
+        ) : _react2.default.createElement('p', null),
         _react2.default.createElement(
           _semanticUiReact.Form.Field,
           null,
@@ -47029,8 +47062,13 @@ var Register = function (_Component) {
           _react2.default.createElement(
             _semanticUiReact.Input,
             null,
-            _react2.default.createElement('input', { type: 'text', placeholder: '', ref: 'username', required: true })
-          )
+            _react2.default.createElement('input', { type: 'text', placeholder: '', ref: 'username', onKeyPress: this.onUsername, required: true })
+          ),
+          this.state.nameError ? _react2.default.createElement(
+            _semanticUiReact.Label,
+            { basic: true, color: 'red', pointing: true },
+            'Your username must be atleast 8 alphacharacters.'
+          ) : _react2.default.createElement('p', null)
         ),
         _react2.default.createElement(
           _semanticUiReact.Form.Field,
@@ -47212,6 +47250,15 @@ var Todo = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'App-section' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'App-header' },
+                    _react2.default.createElement(
+                        'p',
+                        { style: { textAlign: 'center' } },
+                        'To Do App!'
+                    )
+                ),
                 this.props.isLoading ? _react2.default.createElement(_loading2.default, { text: 'Please Wait', speed: 300 }) : _react2.default.createElement(
                     _semanticUiReact.Container,
                     null,
@@ -47269,11 +47316,15 @@ var Todo = function (_React$Component) {
                                         'p',
                                         null,
                                         this.props.originalitems - this.props.completedCount,
+                                        '/',
+                                        this.props.originalitems,
                                         ' item left'
                                     ) : _react2.default.createElement(
                                         'p',
                                         null,
                                         this.props.originalitems - this.props.completedCount,
+                                        '/',
+                                        this.props.originalitems,
                                         ' items left'
                                     ),
                                     this.props.onUpdate ? _react2.default.createElement(_loading2.default, { text: 'Loading', speed: 300 }) : _react2.default.createElement(
@@ -47375,6 +47426,7 @@ var User = function (_Component) {
             return _react2.default.createElement(
                 _semanticUiReact.Container,
                 { text: true },
+                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                     _semanticUiReact.Menu,
                     { attached: 'top', tabular: true },
@@ -47545,6 +47597,7 @@ var TodoContainer = function (_React$Component) {
                 console.log(res);
                 console.log("Logout Success!");
                 _this3.context.router.push('/');
+                // window.location = '/';
             }).catch(function (err) {
                 console.log(err);
             });

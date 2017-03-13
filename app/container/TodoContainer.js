@@ -75,6 +75,7 @@ class TodoContainer extends React.Component{
             console.log(res);
             console.log("Logout Success!")
             this.context.router.push('/');  
+            // window.location = '/';
         }).catch((err)=>{
           console.log(err);
         });  
