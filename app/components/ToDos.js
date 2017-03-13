@@ -12,6 +12,7 @@ const ToDos=(props)=>{
         <div>
                     <Message
                         negative={props.item.isCompleted?true:false}
+                        info={props.item.isCompleted?false:true}
                         >
                     <List.Item>
                         <List.Content floated='right'>
@@ -44,7 +45,7 @@ const ToDos=(props)=>{
                     </List.Content>
                 </List.Item>
                 </Message>
-        </div> 
+                </div> 
     );
 }
 

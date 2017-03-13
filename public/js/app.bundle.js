@@ -21764,7 +21764,8 @@ var ToDos = function ToDos(props) {
         _react2.default.createElement(
             _semanticUiReact.Message,
             {
-                negative: props.item.isCompleted ? true : false
+                negative: props.item.isCompleted ? true : false,
+                info: props.item.isCompleted ? false : true
             },
             _react2.default.createElement(
                 _semanticUiReact.List.Item,
@@ -46761,8 +46762,7 @@ var routes = _react2.default.createElement(
         { path: '/', component: _App2.default },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _UserContainer2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'todo', component: _TodoContainer2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _UserContainer2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _UserContainer2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: ':mode', component: _UserContainer2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'todo/:mode', component: _TodoContainer2.default })
     )
 );
@@ -47229,8 +47229,8 @@ var Todo = function (_React$Component) {
                             _semanticUiReact.Menu,
                             { pointing: true, secondary: true },
                             _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'all', active: this.props.activeItem === 'all', onClick: this.props.todoAll }),
-                            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'open', active: this.props.activeItem === 'open', onClick: this.props.todoOpen }),
-                            _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'completed', active: this.props.activeItem === 'completed', onClick: this.props.todoCompleted }),
+                            _react2.default.createElement(_semanticUiReact.Menu.Item, { style: { color: 'blue' }, name: 'open', active: this.props.activeItem === 'open', onClick: this.props.todoOpen }),
+                            _react2.default.createElement(_semanticUiReact.Menu.Item, { style: { color: 'red' }, name: 'completed', active: this.props.activeItem === 'completed', onClick: this.props.todoCompleted }),
                             _react2.default.createElement(
                                 _semanticUiReact.Menu.Menu,
                                 { position: 'right' },
@@ -47356,7 +47356,7 @@ var User = function (_Component) {
         var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props, context));
 
         _this.state = {
-            activeItem: 'login'
+            activeItem: ''
         };
         _this.handleItemClick = _this.handleItemClick.bind(_this);
         return _this;
@@ -47378,22 +47378,16 @@ var User = function (_Component) {
                 _react2.default.createElement(
                     _semanticUiReact.Menu,
                     { attached: 'top', tabular: true },
-                    _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'login', active: this.state.activeItem === 'login', onClick: this.handleItemClick }),
-                    _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'register', active: this.state.activeItem === 'register', onClick: this.handleItemClick })
+                    _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'login', active: this.props.mode === 'login', onClick: this.props.handleLogin }),
+                    _react2.default.createElement(_semanticUiReact.Menu.Item, { name: 'register', active: this.props.mode === 'register', onClick: this.props.handleRegister })
                 ),
-                this.state.activeItem === 'login' ? _react2.default.createElement(
+                this.props.mode === 'login' ? _react2.default.createElement(
                     _semanticUiReact.Segment,
                     { attached: 'bottom' },
                     _react2.default.createElement(
                         'div',
                         { className: 'App-section' },
-                        _react2.default.createElement(_Login2.default, null),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: this.props.switch, value: 'RegForm' },
-                            'Register'
-                        )
+                        _react2.default.createElement(_Login2.default, null)
                     )
                 ) : _react2.default.createElement(
                     _semanticUiReact.Segment,
@@ -47401,13 +47395,7 @@ var User = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'App-section' },
-                        _react2.default.createElement(_Register2.default, null),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: this.props.switch, value: 'LoginForm' },
-                            'Back'
-                        )
+                        _react2.default.createElement(_Register2.default, null)
                     )
                 )
             );
@@ -47424,6 +47412,9 @@ User.PropTypes = {
     handleLogin: _react.PropTypes.func.isRequired
 };
 
+User.contextTypes = {
+    router: _react2.default.PropTypes.object.isRequired
+};
 exports.default = User;
 
 /***/ }),
@@ -47774,6 +47765,8 @@ var UserContainer = function (_React$Component) {
             login: true
         };
         _this.switch = _this.switch.bind(_this);
+        _this.handleLogin = _this.handleLogin.bind(_this);
+        _this.handleRegister = _this.handleRegister.bind(_this);
         return _this;
     }
 
@@ -47799,22 +47792,27 @@ var UserContainer = function (_React$Component) {
                     _this2.context.router.push('/todo');
                 }
             });
+            if (this.props.routeParams.mode === undefined) {
+                this.context.router.push('/login');
+            }
         }
-
-        // handleLogin(){
-        //   this.context.router.push('login');
-        // }
-        // handleRegister(){
-        //   this.context.router.push('register');
-        // }
-
+    }, {
+        key: 'handleLogin',
+        value: function handleLogin() {
+            this.context.router.push('login');
+        }
+    }, {
+        key: 'handleRegister',
+        value: function handleRegister() {
+            this.context.router.push('register');
+        }
     }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(_User2.default, { login: this.state.login, 'switch': this.switch,
                 handleLogin: this.handleLogin,
-                handleRegister: this.handleRegister
-            });
+                handleRegister: this.handleRegister,
+                mode: this.props.routeParams.mode });
         }
     }]);
 

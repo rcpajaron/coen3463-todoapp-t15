@@ -9,37 +9,34 @@ class User extends Component {
     constructor(props,context) {
       super(props,context);
         this.state={
-          activeItem: 'login',
+          activeItem: '',
         }
         this.handleItemClick = this.handleItemClick.bind(this);
     }
 
     handleItemClick(e, { name }){
         this.setState({ activeItem: name })
-}
+    }
+
 
     render(){
     return(
         <Container text>
             <Menu attached='top' tabular>
-          <Menu.Item name='login' active={this.state.activeItem === 'login'} onClick={this.handleItemClick}  />
-          <Menu.Item name='register' active={this.state.activeItem === 'register'} onClick={this.handleItemClick} />
+          <Menu.Item name='login' active={this.props.mode === 'login'} onClick={this.props.handleLogin}  />
+          <Menu.Item name='register' active={this.props.mode === 'register'} onClick={this.props.handleRegister} />
           
         </Menu>
-        {this.state.activeItem === 'login'?
+        {this.props.mode === 'login'?
         <Segment attached='bottom'>
           <div className="App-section" >
                     <Login/>   
-                    <br/>
-                    <button onClick={this.props.switch} value="RegForm">Register</button> 
                 </div>
         </Segment>
         :
         <Segment attached='bottom'>
                 <div className="App-section" >                  
                     <Register />
-                    <br/>
-                    <button onClick={this.props.switch} value="LoginForm">Back</button>
                 </div>
         </Segment>
         }     
@@ -57,4 +54,8 @@ User.PropTypes = {
     handleLogin: PropTypes.func.isRequired,
 }
 
+
+User.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 export default User;
