@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './App.css';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form, Input, Message } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Input, Label, Message, Menu} from 'semantic-ui-react';
 
 class Login extends Component {
     constructor(props,context) {
@@ -49,13 +49,14 @@ class Login extends Component {
     
     render(){
     return (
+       
       <Form>
       {this.state.error?
       <Message negative>
         <Message.Header>{this.state.title}</Message.Header>
         <p>{this.state.error}</p>
       </Message>:<p/>}
-      
+        
         <Form.Field>
           <label>Username</label>
           <Input>

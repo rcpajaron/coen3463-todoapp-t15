@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
-import { Button, Checkbox, Form, Input, Label, Message } from 'semantic-ui-react';
-
+import { Button, Checkbox, Form, Input, Label, Message, Menu} from 'semantic-ui-react';
 class Register extends Component {
   constructor(props) {
   super(props);

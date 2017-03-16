@@ -1,22 +1,40 @@
 .App {
+
+}
+.App-section {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+
+}
+.App-sections {
+  margin-top: 20px;
+  margin-left: 450px;
+  margin-right: 450px;
+
 }
 
+
 .App-logo {
+  
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 50px;
-  padding: 20px;
-  color: white;
+  background-image: url("http://4vector.com/i/free-vector-colored-paper-notes-vector_001663_Memo_notes1.jpg");
+  height: 120px;
+  padding: 115px;
+  
 }
 
 .App-intro {
+
   font-size: large;
   padding-left: 50px;
 }
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

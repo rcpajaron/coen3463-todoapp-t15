@@ -201,14 +201,14 @@ strong {
 }
 
 pre {
-  background-color: whitesmoke;
+  background-color: black;
   color: #4a4a4a;
   white-space: pre;
   word-wrap: normal;
 }
 
 pre code {
-  background-color: whitesmoke;
+  background-color: black;
   color: #4a4a4a;
   display: block;
   overflow-x: auto;

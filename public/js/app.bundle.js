@@ -15346,7 +15346,7 @@ var loadingimage = React.createClass({
 					null,
 					this.state.text
 				),
-				'We are fetching that content for you.'
+				'Loading content.'
 			)
 		);
 	}
@@ -47250,15 +47250,7 @@ var Todo = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'App-section' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'App-header' },
-                    _react2.default.createElement(
-                        'p',
-                        { style: { textAlign: 'center' } },
-                        'To Do App!'
-                    )
-                ),
+                _react2.default.createElement('div', { className: 'App-header' }),
                 this.props.isLoading ? _react2.default.createElement(_loading2.default, { text: 'Please Wait', speed: 300 }) : _react2.default.createElement(
                     _semanticUiReact.Container,
                     null,
@@ -83166,7 +83158,7 @@ exports = module.exports = __webpack_require__(646)();
 
 
 // module
-exports.push([module.i, ".App {\r\n}\r\n\r\n.App-logo {\r\n  animation: App-logo-spin infinite 20s linear;\r\n  height: 80px;\r\n}\r\n\r\n.App-header {\r\n  background-color: #222;\r\n  height: 50px;\r\n  padding: 20px;\r\n  color: white;\r\n}\r\n\r\n.App-intro {\r\n  font-size: large;\r\n  padding-left: 50px;\r\n}\r\n\r\n@keyframes App-logo-spin {\r\n  from { transform: rotate(0deg); }\r\n  to { transform: rotate(360deg); }\r\n}\r\n", ""]);
+exports.push([module.i, ".App {\r\n\r\n}\r\n.App-section {\r\n  margin-top: 50px;\r\n  margin-left: 50px;\r\n  margin-right: 50px;\r\n  margin-bottom: 10px;\r\n\r\n}\r\n.App-sections {\r\n  margin-top: 20px;\r\n  margin-left: 450px;\r\n  margin-right: 450px;\r\n\r\n}\r\n\r\n\r\n.App-logo {\r\n  \r\n  animation: App-logo-spin infinite 20s linear;\r\n  height: 80px;\r\n}\r\n\r\n.App-header {\r\n  background-image: url(\"http://4vector.com/i/free-vector-colored-paper-notes-vector_001663_Memo_notes1.jpg\");\r\n  height: 120px;\r\n  padding: 115px;\r\n  \r\n}\r\n\r\n.App-intro {\r\n\r\n  font-size: large;\r\n  padding-left: 50px;\r\n}\r\n\r\n\r\n@keyframes App-logo-spin {\r\n  from { transform: rotate(0deg); }\r\n  to { transform: rotate(360deg); }\r\n}", ""]);
 
 // exports
 

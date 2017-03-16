@@ -77,7 +77,7 @@ var loadingimage = React.createClass({
 			    <Icon name='circle notched' loading />
 			    <Message.Content>
 			      <Message.Header>{this.state.text}</Message.Header>
-			      We are fetching that content for you.
+			      Loading content.
 			    </Message.Content>
 			 </Message>
 		);

@@ -19,7 +19,7 @@ var users = require('./routes/users');
 var auth = require('./routes/auth');
 var todo = require('./routes/todo');
         
-var MongoURI = 'mongodb://RE:rudeemman@ds161039.mlab.com:61039/module68';
+var MongoURI = 'mongodb://roemar:roemar@ds119750.mlab.com:19750/todolist';
 
 var app = express();
 

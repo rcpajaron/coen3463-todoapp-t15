@@ -50,7 +50,7 @@ class Todo extends React.Component{
     return(
         <div className="App-section">
                 <div className="App-header">
-                    <p style={{textAlign:'center'}}>To Do App!</p>
+                    
                     
                 </div>
                 {this.props.isLoading? 
