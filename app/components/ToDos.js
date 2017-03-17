@@ -14,7 +14,7 @@ const ToDos=(props)=>{
             negative={props.item.isCompleted?true:false}
             info={props.item.isCompleted?false:true}>
             <List.Item>
-                <List.Content floated='center'>
+                <List.Content floated='right'>
                     <Button animated size='medium' onClick={(e)=>{
                                         e.preventDefault()
                                         props.onComplete(props.item, props.index);

@@ -21771,7 +21771,7 @@ var ToDos = function ToDos(props) {
                 null,
                 _react2.default.createElement(
                     _semanticUiReact.List.Content,
-                    { floated: 'center' },
+                    { floated: 'right' },
                     _react2.default.createElement(
                         _semanticUiReact.Button,
                         { animated: true, size: 'medium', onClick: function onClick(e) {
