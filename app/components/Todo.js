@@ -61,17 +61,17 @@ class Todo extends React.Component{
                 <div className="App-section">
                 <Menu pointing secondary>
                   <Menu.Item name='all' active={this.props.activeItem === 'all'} onClick={this.props.todoAll} />
-                  <Menu.Item style={{color: 'blue'}} name='open' active={this.props.activeItem === 'open'} onClick={this.props.todoOpen} />
-                  <Menu.Item style={{color: 'red'}}  name='completed' active={this.props.activeItem === 'completed'} onClick={this.props.todoCompleted} />
+                  <Menu.Item style={{color: 'yellow'}} name='open' active={this.props.activeItem === 'open'} onClick={this.props.todoOpen} />
+                  <Menu.Item style={{color: 'blue'}}  name='finished' active={this.props.activeItem === 'completed'} onClick={this.props.todoCompleted} />
                   <Menu.Menu position='right'>
-                    <Menu.Item name='Clear All Completed' onClick={this.props.DelAllComplete} />
+                    <Menu.Item name='Clear All Finished Task' onClick={this.props.DelAllComplete} />
                     <Menu.Item name='logout' onClick={this.props.onLogOut} />
                   </Menu.Menu>
                 </Menu>
                 <Form>
                 <Form.Field>
                     <Input size="medium">
-                        <input placeholder="Add a To Do item." ref="todo"/>
+                        <input placeholder="Add a item/s." ref="todo"/>
                         <button onClick={this.onAddTodo}>+</button>
                     </Input>
                 </Form.Field>
