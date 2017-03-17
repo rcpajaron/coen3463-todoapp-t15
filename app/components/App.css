@@ -23,10 +23,11 @@
 }
 
 .App-header {
-  background-image: url("http://4vector.com/i/free-vector-colored-paper-notes-vector_001663_Memo_notes1.jpg");
-  width: 150%;
+  background-image: url("https://img.clipartfest.com/898ff76f58129a7292702b2a31b97836_papel-picado-search-and-papel-picado-banner-clipart_736-307.jpeg");
+  width: 500%;
   height: 120px;
   padding: 115px;
+  margin-left: -100px;
   
 }
 

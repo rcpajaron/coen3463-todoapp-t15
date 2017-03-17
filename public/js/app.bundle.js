@@ -83158,7 +83158,7 @@ exports = module.exports = __webpack_require__(646)();
 
 
 // module
-exports.push([module.i, ".App {\r\n\r\n}\r\n.App-section {\r\n  margin-top: 50px;\r\n  margin-left: 50px;\r\n  margin-right: 50px;\r\n  margin-bottom: 10px;\r\n\r\n}\r\n.App-sections {\r\n  margin-top: 20px;\r\n  margin-left: 450px;\r\n  margin-right: 450px;\r\n\r\n}\r\n\r\n\r\n.App-logo {\r\n  \r\n  animation: App-logo-spin infinite 20s linear;\r\n  height: 80px;\r\n}\r\n\r\n.App-header {\r\n  background-image: url(\"http://4vector.com/i/free-vector-colored-paper-notes-vector_001663_Memo_notes1.jpg\");\r\n  height: 120px;\r\n  padding: 115px;\r\n  \r\n}\r\n\r\n.App-intro {\r\n\r\n  font-size: large;\r\n  padding-left: 50px;\r\n}\r\n\r\n\r\n@keyframes App-logo-spin {\r\n  from { transform: rotate(0deg); }\r\n  to { transform: rotate(360deg); }\r\n}", ""]);
+exports.push([module.i, ".App {\r\n\r\n}\r\n.App-section {\r\n  margin-top: 50px;\r\n  margin-left: 50px;\r\n  margin-right: 50px;\r\n  margin-bottom: 10px;\r\n\r\n}\r\n.App-sections {\r\n  margin-top: 20px;\r\n  margin-left: 450px;\r\n  margin-right: 450px;\r\n\r\n}\r\n\r\n\r\n.App-logo {\r\n  \r\n  animation: App-logo-spin infinite 20s linear;\r\n  height: 80px;\r\n}\r\n\r\n.App-header {\r\n  background-image: url(\"https://img.clipartfest.com/898ff76f58129a7292702b2a31b97836_papel-picado-search-and-papel-picado-banner-clipart_736-307.jpeg\");\r\n  width: 500%;\r\n  height: 120px;\r\n  padding: 115px;\r\n  margin-left: -100px;\r\n  \r\n}\r\n\r\n.App-intro {\r\n\r\n  font-size: large;\r\n  padding-left: 50px;\r\n}\r\n\r\n\r\n@keyframes App-logo-spin {\r\n  from { transform: rotate(0deg); }\r\n  to { transform: rotate(360deg); }\r\n}", ""]);
 
 // exports
 
